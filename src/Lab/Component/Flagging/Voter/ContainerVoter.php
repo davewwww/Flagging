@@ -2,6 +2,7 @@
 
 namespace Lab\Component\Flagging\Voter;
 
+use Lab\Component\Flagging\Model\FilterInterface;
 use Lab\Component\Flagging\VoteContext;
 
 /**
@@ -10,22 +11,22 @@ use Lab\Component\Flagging\VoteContext;
 class ContainerVoter implements VoterInterface
 {
     /**
-     * @var string
-     */
-    protected $name;
-    /**
      * @var VoterInterface[]
      */
     protected $voterContainer;
+    /**
+     * @var string
+     */
+    protected $name;
 
     /**
-     * @param string           $name
      * @param VoterInterface[] $voterContainer
+     * @param string $name
      */
-    function __construct($name, $voterContainer)
+    function __construct($voterContainer, $name = "container")
     {
-        $this->name = $name;
         $this->voterContainer = $voterContainer;
+        $this->name = $name;
     }
 
     /**
@@ -41,8 +42,14 @@ class ContainerVoter implements VoterInterface
      */
     public function vote($config, VoteContext $token)
     {
-        $voterName = key($entry);
-        $voterConfig = current($entry);
+        if($config instanceof FilterInterface) {
+            $voterName = $config->getName();
+            $voterConfig = $config->getParameter();
+        }
+        else {
+            $voterName = $config["voter"];
+            $voterConfig = $config["config"];
+        }
 
         return $this->voterContainer[$voterName]->vote($voterConfig, $token);
     }

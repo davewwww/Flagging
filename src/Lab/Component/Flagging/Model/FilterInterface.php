@@ -13,7 +13,17 @@ interface FilterInterface
     function getName();
 
     /**
+     * @param string $name
+     */
+    function setName($name);
+
+    /**
      * @return array
      */
     function getParameter();
+
+    /**
+     * @param mixed $parameters
+     */
+    function setParameter($parameters);
 }

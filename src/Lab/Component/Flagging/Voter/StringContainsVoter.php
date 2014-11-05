@@ -27,8 +27,8 @@ class StringContainsVoter implements VoterInterface
 
     /**
      * @param WalkEntriesStrategyInterface $walker
-     * @param string                       $name
-     * @param string                       $string
+     * @param string $name
+     * @param string $string
      */
     function __construct(WalkEntriesStrategyInterface $walker, $name, $string)
     {
@@ -50,8 +50,10 @@ class StringContainsVoter implements VoterInterface
      */
     public function vote($config, VoteContext $token)
     {
-        return $this->orWalker->walk($config, function ($entry) use ($token) {
+        $closure = function ($entry) use ($token) {
             return false !== strpos($this->string, $entry);
-        });
+        };
+
+        return is_array($config) ? $this->orWalker->walk($config, $closure) : $closure($config);
     }
 }

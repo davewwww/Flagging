@@ -4,6 +4,7 @@ namespace Lab\Component\Flagging\Decider;
 
 use Lab\Component\Flagging\Model\FeatureInterface;
 use Lab\Component\Flagging\VoteContext;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * @author David Wolter <david@dampfer.net>
@@ -16,9 +17,17 @@ class FeatureDecider extends AbstractDecider implements FeatureDeciderInterface
     protected $filterDecider;
 
     /**
+     * @param EntriesDeciderInterface $filterDecider
+     */
+    function __construct(EntriesDeciderInterface $filterDecider)
+    {
+        $this->filterDecider = $filterDecider;
+    }
+
+    /**
      * @param FeatureInterface $feature
-     * @param VoteContext      $context
-     * @param mixed            $default
+     * @param VoteContext $context
+     * @param mixed $default
      *
      * @return bool
      */
@@ -36,7 +45,7 @@ class FeatureDecider extends AbstractDecider implements FeatureDeciderInterface
 
     /**
      * @param VoteContext $token
-     * @param array       $required
+     * @param array $required
      *
      * @throws \Exception
      */

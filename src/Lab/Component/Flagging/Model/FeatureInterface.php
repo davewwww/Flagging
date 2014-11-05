@@ -13,9 +13,21 @@ interface FeatureInterface
     function getName();
 
     /**
-     * @return FilterInterface[]
+     * @param string $name
+     */
+    function setName($name);
+
+    /**
+     * :TODO: FilterCollectionInterface[]
+     *
+     * @return array
      */
     function getFilters();
+
+    /**
+     * @param array $filters
+     */
+    function setFilters(array $filters);
 
     /**
      * @return ValueInterface[]

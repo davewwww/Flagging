@@ -5,6 +5,7 @@ namespace Lab\Component\Flagging\Decider;
 use Lab\Component\Flagging\Strategie\WalkEntriesStrategyInterface;
 use Lab\Component\Flagging\VoteContext;
 use Lab\Component\Flagging\Voter\VoterInterface;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * @author David Wolter <david@dampfer.net>
@@ -12,17 +13,27 @@ use Lab\Component\Flagging\Voter\VoterInterface;
 class VoteEntriesDecider implements EntriesDeciderInterface
 {
     /**
-     * @var WalkEntriesStrategyInterface
-     */
-    protected $walkStrategy;
-
-    /**
      * @var VoterInterface
      */
     protected $voter;
 
     /**
-     * @param array       $entries
+     * @var WalkEntriesStrategyInterface
+     */
+    protected $walkStrategy;
+
+    /**
+     * @param VoterInterface $voter
+     * @param WalkEntriesStrategyInterface $walkStrategy
+     */
+    function __construct(VoterInterface $voter, WalkEntriesStrategyInterface $walkStrategy)
+    {
+        $this->voter = $voter;
+        $this->walkStrategy = $walkStrategy;
+    }
+
+    /**
+     * @param array $entries
      * @param VoteContext $token
      *
      * @return bool
