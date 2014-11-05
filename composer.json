@@ -1,0 +1,24 @@
+{
+    "name": "lab/flagging",
+    "description": ":TODO:",
+    "keywords": ["feature", "flagging", "toggle", "flipper", "switch", "decider", "voter"],
+    "homepage": "http://www.lovoo.com",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "David Wolter",
+            "email": "david@lovoo.com",
+            "homepage": "http://www.lovoo.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+	"autoload": {
+ 		"psr-0": { "Lab\\Component\\Flagging": "src/" }
+	},
+    "require-dev": {
+        "phpunit/phpunit": "~3.7.0"
+    }
+}
