@@ -1,0 +1,48 @@
+lab_flagging:
+  features:
+
+    test_feature: ~
+
+    test_feature_filter:
+      filters:
+        -
+          email: "user@domain.com"
+
+    test_feature_With_values:
+      filters:
+        -
+          email: "user@domain.com"
+          emails: ["user@domain.com", "user2@domain.com"]
+          country: ["!DE"]
+          version: {"operator":">=", "value": "1.14"}
+      values:
+        -
+          value: 0
+          filters:
+            -
+              environments: [web]
+        -
+          value: 5
+
+    test_values:
+      values:
+        -
+          value: 0
+          filters:
+            -
+              environments: [web]
+        -
+          value: 5
+
+
+
+    #
+    # :IDEE: "feature" gleich mit in rein, anstatt über filter
+    #
+    test_values_feature:
+      values:
+        -
+          value: 0
+          feature: test_feature_filter
+        -
+          value: 5
