@@ -13,7 +13,12 @@ class Feature implements FeatureInterface
     protected $enabled = true;
     protected $requiredParameters = array();
 
-    function __construct($name, $filters = null, $values = null)
+    /**
+     * @param $name
+     * @param null $filters
+     * @param ValueInterface[] $values
+     */
+    function __construct($name, $filters = null, array $values = null)
     {
         $this->name = $name;
         $this->filters = $filters;
@@ -53,7 +58,7 @@ class Feature implements FeatureInterface
     }
 
     /**
-     * @return mixed
+     * @return ValueInterface[]
      */
     public function getValues()
     {

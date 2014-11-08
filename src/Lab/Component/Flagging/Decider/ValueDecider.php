@@ -8,8 +8,7 @@ use Lab\Component\Flagging\VoteContext;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class ValueDecider extends AbstractDecider implements FeatureDeciderInterface
-{
+class ValueDecider extends AbstractDecider implements FeatureDeciderInterface {
     /**
      * @var FeatureDeciderInterface
      */
@@ -20,19 +19,28 @@ class ValueDecider extends AbstractDecider implements FeatureDeciderInterface
     protected $filterDecider;
 
     /**
+     * @param FeatureDeciderInterface $featureDecider
+     * @param EntriesDeciderInterface $filterDecider
+     */
+    function __construct(FeatureDeciderInterface $featureDecider, EntriesDeciderInterface $filterDecider) {
+        $this->featureDecider = $featureDecider;
+        $this->filterDecider = $filterDecider;
+    }
+
+    /**
      * @param FeatureInterface $feature
-     * @param VoteContext      $context
-     * @param mixed            $default
+     * @param VoteContext $context
+     * @param mixed $default
      *
      * @return mixed
      */
-    public function decideFeature(FeatureInterface $feature, VoteContext $context, $default = null)
-    {
-        if ($this->featureDecider->decideFeature($feature, $context)) {
-            foreach ($feature->getValues() as $key => $value) {
-                $context->setName($feature->getName()."_".$key);
+    public function decideFeature(FeatureInterface $feature, VoteContext $context, $default = null) {
+        if( $this->featureDecider->decideFeature($feature, $context) ) {
+            foreach( $feature->getValues() as $key => $value ) {
+                $context->setName($feature->getName() . "_" . $key);
 
-                if ($this->filterDecider->decide($value->getFilters(), $context)) {
+                $filters = $value->getFilters();
+                if(empty($filters) || $this->filterDecider->decide($filters, $context) ) {
                     return $value->getValue();
                 }
             }

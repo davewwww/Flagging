@@ -40,7 +40,8 @@ class FeatureDecider extends AbstractDecider implements FeatureDeciderInterface
         $context->setName($feature->getName());
         $this->checkParameter($context, $feature->getRequiredParameters());
 
-        return $this->filterDecider->decide($feature->getFilters(), $context);
+        $filters = $feature->getFilters();
+        return !empty($filters) ? $this->filterDecider->decide($filters, $context) : true;
     }
 
     /**

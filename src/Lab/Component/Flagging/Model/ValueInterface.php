@@ -8,7 +8,7 @@ namespace Lab\Component\Flagging\Model;
 interface ValueInterface
 {
     /**
-     * @return FilterInterface[]
+     * @return array
      */
     function getFilters();
 
