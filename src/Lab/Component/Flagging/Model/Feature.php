@@ -5,87 +5,79 @@ namespace Lab\Component\Flagging\Model;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class Feature implements FeatureInterface
-{
+class Feature implements FeatureInterface {
+    use FiltersTrait;
+
+    /**
+     * @var string
+     */
     protected $name;
-    protected $filters;
+
+    /**
+     * @var null|ValueInterface[]
+     */
     protected $values;
+
+    /**
+     * @var bool
+     */
     protected $enabled = true;
+
+    /**
+     * @var array
+     */
     protected $requiredParameters = array();
 
     /**
-     * @param $name
-     * @param null $filters
+     * @param string $name
+     * @param FilterCollectionInterface[] $filters
      * @param ValueInterface[] $values
      */
-    function __construct($name, $filters = null, array $values = null)
-    {
+    function __construct($name, $filters = null, array $values = null) {
         $this->name = $name;
-        $this->filters = $filters;
+        $this->setFilters($filters);
         $this->values = $values;
     }
 
     /**
      * @return mixed
      */
-    public function getFilters()
-    {
-        return $this->filters;
-    }
-
-    /**
-     * @param mixed $filters
-     */
-    public function setFilters(array $filters)
-    {
-        $this->filters = $filters;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getName()
-    {
+    public function getName() {
         return $this->name;
     }
 
     /**
      * @param mixed $name
      */
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
     }
 
     /**
-     * @return ValueInterface[]
+     * @return null|ValueInterface[]
      */
-    public function getValues()
-    {
+    public function getValues() {
         return $this->values;
     }
 
     /**
      * @param mixed $values
      */
-    public function setValues($values)
-    {
+    public function setValues($values) {
         $this->values = $values;
     }
 
     /**
      * @return array
      */
-    function getRequiredParameters()
-    {
+    function getRequiredParameters() {
         return $this->requiredParameters;
     }
 
     /**
      * @return bool
      */
-    function isEnabled()
-    {
+    function isEnabled() {
         return $this->enabled;
     }
 }

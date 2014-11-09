@@ -2,9 +2,9 @@
 
 namespace Lab\Component\Flagging\Tests;
 
-use Lab\Component\Flagging\Strategie\DecideEntryStrategy;
-use Lab\Component\Flagging\Strategie\NegationEntryStrategy;
-use Lab\Component\Flagging\Strategie\OrWalkEntriesStrategy;
+use Lab\Component\Flagging\Delegator\EntryDelegator;
+use Lab\Component\Flagging\Delegator\NegationEntryDelegator;
+use Lab\Component\Flagging\Delegator\OrEntriesDelegator;
 use Lab\Component\Flagging\VoteContext;
 use Lab\Component\Flagging\Voter\ChainVoter;
 use Lab\Component\Flagging\Voter\DateRangeVoter;
@@ -18,7 +18,7 @@ class VoterTest extends \PHPUnit_Framework_TestCase
     public function testStringContainsVoter()
     {
         $string = "lorem ipsum";
-        $voter = new StringContainsVoter(new OrWalkEntriesStrategy(new NegationEntryStrategy()), "string", $string);
+        $voter = new StringContainsVoter(new OrEntriesDelegator(new NegationEntryDelegator()), "string", $string);
         $context = new VoteContext();
 
         $this->assertTrue($voter->vote(array("lorem"), $context));
@@ -65,9 +65,9 @@ class VoterTest extends \PHPUnit_Framework_TestCase
 
     public function testChainVoter()
     {
-        $voter1 = new StringContainsVoter(new OrWalkEntriesStrategy(new NegationEntryStrategy()), "string", "lorem ipsum");
-        $voter2 = new StringContainsVoter(new OrWalkEntriesStrategy(new NegationEntryStrategy()), "string", "foo bar");
-        $voter = new ChainVoter(new OrWalkEntriesStrategy(new DecideEntryStrategy()), array($voter1, $voter2), "loremfoobar");
+        $voter1 = new StringContainsVoter(new OrEntriesDelegator(new NegationEntryDelegator()), "string", "lorem ipsum");
+        $voter2 = new StringContainsVoter(new OrEntriesDelegator(new NegationEntryDelegator()), "string", "foo bar");
+        $voter = new ChainVoter(new OrEntriesDelegator(new EntryDelegator()), array($voter1, $voter2), "loremfoobar");
 
         $context = new VoteContext();
 

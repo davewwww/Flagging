@@ -8,7 +8,7 @@ namespace Lab\Component\Flagging\Model;
 interface FilterInterface
 {
     /**
-     * @return array
+     * @return string
      */
     function getName();
 

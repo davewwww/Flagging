@@ -5,7 +5,7 @@ namespace Lab\Component\Flagging\Model;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-interface FeatureInterface
+interface FeatureInterface extends FiltersTraitInterface
 {
     /**
      * @return string
@@ -18,19 +18,7 @@ interface FeatureInterface
     function setName($name);
 
     /**
-     * :TODO: FilterCollectionInterface[]
-     *
-     * @return array
-     */
-    function getFilters();
-
-    /**
-     * @param array $filters
-     */
-    function setFilters(array $filters);
-
-    /**
-     * @return ValueInterface[]
+     * @return null|ValueInterface[]
      */
     function getValues();
 

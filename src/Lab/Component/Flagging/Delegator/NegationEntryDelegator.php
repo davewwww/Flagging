@@ -1,11 +1,12 @@
 <?php
 
-namespace Lab\Component\Flagging\Strategie;
+namespace Lab\Component\Flagging\Delegator;
+
 
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class NegationEntryStrategy implements DecideEntryStrategyInterface
+class NegationEntryDelegator implements EntryDelegatorInterface
 {
     /**
      * @param string   $entry
@@ -13,7 +14,7 @@ class NegationEntryStrategy implements DecideEntryStrategyInterface
      *
      * @return bool
      */
-    public function decide($entry, \Closure $closure)
+    public function delegate($entry, \Closure $closure)
     {
         $negated = $this->isNegated($entry);
         $result = $closure($entry);

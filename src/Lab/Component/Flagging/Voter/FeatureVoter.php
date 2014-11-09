@@ -2,8 +2,8 @@
 
 namespace Lab\Component\Flagging\Voter;
 
-use Lab\Component\Flagging\Decider\FeatureDeciderInterface;
-use Lab\Component\Flagging\Strategie\WalkEntriesStrategyInterface;
+use Lab\Component\Flagging\FeatureDeciderInterface;
+use Lab\Component\Flagging\Delegator\EntriesDelegatorInterface;
 use Lab\Component\Flagging\VoteContext;
 
 /**
@@ -12,9 +12,9 @@ use Lab\Component\Flagging\VoteContext;
 class FeatureVoter implements VoterInterface
 {
     /**
-     * @var WalkEntriesStrategyInterface
+     * @var EntriesDelegatorInterface
      */
-    protected $andOrWalker;
+    protected $entriesDelegator;
 
     /**
      * @var FeatureDeciderInterface
@@ -27,14 +27,14 @@ class FeatureVoter implements VoterInterface
     protected $name;
 
     /**
-     * @param WalkEntriesStrategyInterface $walker
+     * @param EntriesDelegatorInterface $entriesDelegator
      * @param FeatureDeciderInterface      $featureDecider
      * @param string                       $name
      */
-    function __construct(WalkEntriesStrategyInterface $walker, FeatureDeciderInterface $featureDecider, $name)
+    function __construct(EntriesDelegatorInterface $entriesDelegator, FeatureDeciderInterface $featureDecider, $name)
     {
 
-        $this->andOrWalker = $walker;
+        $this->entriesDelegator = $entriesDelegator;
         $this->featureDecider = $featureDecider;
         $this->name = $name;
     }
@@ -52,7 +52,7 @@ class FeatureVoter implements VoterInterface
      */
     public function vote($config, VoteContext $token)
     {
-        return $this->andOrWalker->walk($config, function ($featureName) use ($token) {
+        return $this->entriesDelegator->delegate($config, function ($featureName) use ($token) {
             $featureNameOrigin = $token->getName();
             $token->setName($featureName);
 

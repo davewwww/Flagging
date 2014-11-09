@@ -1,19 +1,17 @@
 <?php
 
-namespace Lab\Component\Flagging\Decider;
+namespace Lab\Component\Flagging;
 
 use Lab\Component\Flagging\Model\FeatureInterface;
-use Lab\Component\Flagging\VoteContext;
 
 /**
  * @author David Wolter <david@dampfer.net>
  */
-interface FeatureDeciderInterface
-{
+interface FeatureDeciderInterface {
     /**
-     * @param string      $name
+     * @param string $name
      * @param VoteContext $context
-     * @param mixed|null  $default
+     * @param mixed|null $default
      *
      * @return mixed
      */
@@ -21,8 +19,8 @@ interface FeatureDeciderInterface
 
     /**
      * @param FeatureInterface $feature
-     * @param VoteContext      $context
-     * @param mixed|null       $default
+     * @param VoteContext $context
+     * @param mixed|null $default
      *
      * @return mixed
      */

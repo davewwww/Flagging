@@ -7,23 +7,17 @@ namespace Lab\Component\Flagging\Model;
  */
 class Value implements ValueInterface {
 
+    use FiltersTrait;
+
     protected $value;
-    protected $filters;
 
     /**
-     * @param array $filters
      * @param $value
+     * @param FilterCollectionInterface[] $filters
      */
     function __construct($value, array $filters = null) {
         $this->value = $value;
-        $this->filters = $filters;
-    }
-
-    /**
-     * @return array
-     */
-    function getFilters() {
-        return $this->filters;
+        $this->setFilters($filters);
     }
 
     /**

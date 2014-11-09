@@ -35,7 +35,6 @@ lab_flagging:
           value: 5
 
 
-
     #
     # :IDEE: "feature" gleich mit in rein, anstatt über filter
     #
@@ -46,3 +45,13 @@ lab_flagging:
           feature: test_feature_filter
         -
           value: 5
+
+Filters
+  filterCollection[]
+
+FilterCollection
+  Filter[]
+
+Filter
+  voter
+  parameter

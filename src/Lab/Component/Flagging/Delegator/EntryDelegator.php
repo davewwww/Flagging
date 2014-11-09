@@ -1,11 +1,12 @@
 <?php
 
-namespace Lab\Component\Flagging\Strategie;
+namespace Lab\Component\Flagging\Delegator;
+
 
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class DecideEntryStrategy implements DecideEntryStrategyInterface
+class EntryDelegator implements EntryDelegatorInterface
 {
     /**
      * @param string   $entry
@@ -13,7 +14,7 @@ class DecideEntryStrategy implements DecideEntryStrategyInterface
      *
      * @return bool
      */
-    public function decide($entry, \Closure $closure)
+    public function delegate($entry, \Closure $closure)
     {
         return $closure($entry);
     }

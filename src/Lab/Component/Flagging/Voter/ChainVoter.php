@@ -2,7 +2,7 @@
 
 namespace Lab\Component\Flagging\Voter;
 
-use Lab\Component\Flagging\Strategie\WalkEntriesStrategyInterface;
+use Lab\Component\Flagging\Delegator\EntriesDelegatorInterface;
 use Lab\Component\Flagging\VoteContext;
 
 /**
@@ -11,7 +11,7 @@ use Lab\Component\Flagging\VoteContext;
 class ChainVoter implements VoterInterface
 {
     /**
-     * @var WalkEntriesStrategyInterface
+     * @var \Lab\Component\Flagging\Strategie\Walk\EntriesDelegatorInterface
      */
     private $walkStrategy;
     /**
@@ -24,11 +24,11 @@ class ChainVoter implements VoterInterface
     private $name;
 
     /**
-     * @param WalkEntriesStrategyInterface $walkStrategy
+     * @param \Lab\Component\Flagging\Delegate\\Lab\Component\Flagging\Delegator\EntriesDelegatorInterface $walkStrategy
      * @param VoterInterface[]             $voters
      * @param string                       $name
      */
-    public function __construct(WalkEntriesStrategyInterface $walkStrategy, array $voters, $name)
+    public function __construct(EntriesDelegatorInterface $walkStrategy, array $voters, $name)
     {
         $this->walkStrategy = $walkStrategy;
         $this->voters = $voters;
@@ -48,7 +48,7 @@ class ChainVoter implements VoterInterface
      */
     public function vote($config, VoteContext $token)
     {
-        return $this->walkStrategy->walk($this->voters, function (VoterInterface $voter) use ($config, $token) {
+        return $this->walkStrategy->delegate($this->voters, function (VoterInterface $voter) use ($config, $token) {
             return $voter->vote($config, $token);
         });
     }

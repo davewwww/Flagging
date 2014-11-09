@@ -2,7 +2,7 @@
 
 namespace Lab\Component\Flagging\Voter;
 
-use Lab\Component\Flagging\Strategie\WalkEntriesStrategyInterface;
+use Lab\Component\Flagging\Delegator\EntriesDelegatorInterface;
 use Lab\Component\Flagging\VoteContext;
 
 /**
@@ -11,7 +11,7 @@ use Lab\Component\Flagging\VoteContext;
 class StringContainsVoter implements VoterInterface
 {
     /**
-     * @var WalkEntriesStrategyInterface
+     * @var \Lab\Component\Flagging\Strategie\Walk\\Lab\Component\Flagging\Walk\\Lab\Component\Flagging\Delegate\\Lab\Component\Flagging\Delegator\EntriesDelegatorInterface
      */
     protected $orWalker;
 
@@ -26,11 +26,11 @@ class StringContainsVoter implements VoterInterface
     protected $name;
 
     /**
-     * @param WalkEntriesStrategyInterface $walker
+     * @param \Lab\Component\Flagging\Strategie\Walk\\Lab\Component\Flagging\Walk\\Lab\Component\Flagging\Delegate\EntriesDelegatorInterface $walker
      * @param string $name
      * @param string $string
      */
-    function __construct(WalkEntriesStrategyInterface $walker, $name, $string)
+    function __construct(EntriesDelegatorInterface $walker, $name, $string)
     {
         $this->orWalker = $walker;
         $this->name = $name;
@@ -54,6 +54,6 @@ class StringContainsVoter implements VoterInterface
             return false !== strpos($this->string, $entry);
         };
 
-        return is_array($config) ? $this->orWalker->walk($config, $closure) : $closure($config);
+        return is_array($config) ? $this->orWalker->delegate($config, $closure) : $closure($config);
     }
 }

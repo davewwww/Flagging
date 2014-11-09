@@ -5,10 +5,9 @@ namespace Lab\Component\Flagging\Model;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-interface ValueInterface extends FiltersTraitInterface
-{
+interface FilterCollectionInterface {
     /**
-     * @return mixed
+     * @return FilterInterface[]
      */
-    function getValue();
+    public function getFilter();
 }
