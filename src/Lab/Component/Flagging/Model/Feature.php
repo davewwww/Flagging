@@ -5,7 +5,8 @@ namespace Lab\Component\Flagging\Model;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class Feature implements FeatureInterface {
+class Feature implements FeatureInterface
+{
     use FiltersTrait;
 
     /**
@@ -29,11 +30,12 @@ class Feature implements FeatureInterface {
     protected $requiredParameters = array();
 
     /**
-     * @param string $name
+     * @param string                      $name
      * @param FilterCollectionInterface[] $filters
-     * @param ValueInterface[] $values
+     * @param ValueInterface[]            $values
      */
-    function __construct($name, $filters = null, array $values = null) {
+    function __construct($name, $filters = null, array $values = null)
+    {
         $this->name = $name;
         $this->setFilters($filters);
         $this->values = $values;
@@ -42,42 +44,48 @@ class Feature implements FeatureInterface {
     /**
      * @return mixed
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
      * @param mixed $name
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
     /**
      * @return null|ValueInterface[]
      */
-    public function getValues() {
+    public function getValues()
+    {
         return $this->values;
     }
 
     /**
      * @param mixed $values
      */
-    public function setValues($values) {
+    public function setValues($values)
+    {
         $this->values = $values;
     }
 
     /**
      * @return array
      */
-    function getRequiredParameters() {
+    function getRequiredParameters()
+    {
         return $this->requiredParameters;
     }
 
     /**
      * @return bool
      */
-    function isEnabled() {
+    function isEnabled()
+    {
         return $this->enabled;
     }
 }

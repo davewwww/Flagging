@@ -11,9 +11,9 @@ use Lab\Component\Flagging\VoteContext;
 class StringContainsVoter implements VoterInterface
 {
     /**
-     * @var \Lab\Component\Flagging\Strategie\Walk\\Lab\Component\Flagging\Walk\\Lab\Component\Flagging\Delegate\\Lab\Component\Flagging\Delegator\EntriesDelegatorInterface
+     * @var EntriesDelegatorInterface
      */
-    protected $orWalker;
+    protected $delegator;
 
     /**
      * @var string
@@ -26,13 +26,13 @@ class StringContainsVoter implements VoterInterface
     protected $name;
 
     /**
-     * @param \Lab\Component\Flagging\Strategie\Walk\\Lab\Component\Flagging\Walk\\Lab\Component\Flagging\Delegate\EntriesDelegatorInterface $walker
-     * @param string $name
-     * @param string $string
+     * @param EntriesDelegatorInterface $delegator
+     * @param string                    $name
+     * @param string                    $string
      */
-    function __construct(EntriesDelegatorInterface $walker, $name, $string)
+    function __construct(EntriesDelegatorInterface $delegator, $name, $string)
     {
-        $this->orWalker = $walker;
+        $this->delegator = $delegator;
         $this->name = $name;
         $this->string = $string;
     }
@@ -50,10 +50,15 @@ class StringContainsVoter implements VoterInterface
      */
     public function vote($config, VoteContext $token)
     {
-        $closure = function ($entry) use ($token) {
-            return false !== strpos($this->string, $entry);
-        };
+        if (is_scalar($config)) {
+            $config = array($config);
+        }
 
-        return is_array($config) ? $this->orWalker->delegate($config, $closure) : $closure($config);
+        return $this->delegator->delegate(
+            $config,
+            function ($entry) use ($token) {
+                return false !== strpos($this->string, $entry);
+            }
+        );
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Lab\Component\Flagging\Comparison;
 
+use Lab\Component\Flagging\Exception\FlaggingException;
+
 /**
  * @author David Wolter <david@dampfer.net>
  */
@@ -10,23 +12,23 @@ class ContainerComparison implements ComparisonInterface
     /**
      * @var \Closure[]
      */
-    protected $comperions;
+    protected $comparisons;
 
     /**
-     * @param \Closure[] $comperions
+     * @param \Closure[] $comparisons
      */
-    function __construct(array $comperions)
+    function __construct(array $comparisons)
     {
-        $this->comperions = $comperions;
+        $this->comparisons = $comparisons;
     }
 
     /**
-     * @param string     $key
-     * @param \Closure[] $comperion
+     * @param string   $key
+     * @param \Closure $comparison
      */
-    public function addComperion($key, $comperion)
+    public function addComparison($key, $comparison)
     {
-        $this->comperions[$key] = $comperion;
+        $this->comparisons[$key] = $comparison;
     }
 
     /**
@@ -34,14 +36,18 @@ class ContainerComparison implements ComparisonInterface
      */
     public function getAllComparisons()
     {
-        return $this->comperions;
+        return $this->comparisons;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getComparison($key)
+    public function getComparison($key = null)
     {
-        return $this->comperions[$key];
+        if (empty($key) || !isset($this->comparisons[$key])) {
+            throw new FlaggingException(sprintf("unknown comparison %s", $key));
+        }
+
+        return $this->comparisons[$key];
     }
 }

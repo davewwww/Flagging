@@ -2,8 +2,8 @@
 
 namespace Lab\Component\Flagging\Voter;
 
-use Lab\Component\Flagging\FeatureDeciderInterface;
 use Lab\Component\Flagging\Delegator\EntriesDelegatorInterface;
+use Lab\Component\Flagging\FeatureDeciderInterface;
 use Lab\Component\Flagging\VoteContext;
 
 /**
@@ -28,8 +28,8 @@ class FeatureVoter implements VoterInterface
 
     /**
      * @param EntriesDelegatorInterface $entriesDelegator
-     * @param FeatureDeciderInterface      $featureDecider
-     * @param string                       $name
+     * @param FeatureDeciderInterface   $featureDecider
+     * @param string                    $name
      */
     function __construct(EntriesDelegatorInterface $entriesDelegator, FeatureDeciderInterface $featureDecider, $name)
     {
@@ -52,15 +52,22 @@ class FeatureVoter implements VoterInterface
      */
     public function vote($config, VoteContext $token)
     {
-        return $this->entriesDelegator->delegate($config, function ($featureName) use ($token) {
-            $featureNameOrigin = $token->getName();
-            $token->setName($featureName);
+        if (is_scalar($config)) {
+            $config = array($config);
+        }
 
-            $result = $this->featureDecider->decide($featureName, $token, false);
+        return $this->entriesDelegator->delegate(
+            $config,
+            function ($featureName) use ($token) {
+                $featureNameOrigin = $token->getName();
+                $token->setName($featureName);
 
-            $token->setName($featureNameOrigin);
+                $result = $this->featureDecider->decide($featureName, $token, false);
 
-            return $result;
-        });
+                $token->setName($featureNameOrigin);
+
+                return $result;
+            }
+        );
     }
 }

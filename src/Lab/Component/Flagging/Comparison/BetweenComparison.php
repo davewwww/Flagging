@@ -15,7 +15,7 @@ class BetweenComparison implements ComparisonInterface
     function getAllComparisons()
     {
         return array(
-            self::NAME => function ($a, $min, $max = null) {
+            self::NAME => function ($a, $min, $max) {
                     return $min <= $a && $max >= $a;
                 }
         );
@@ -24,7 +24,7 @@ class BetweenComparison implements ComparisonInterface
     /**
      * {@inheritDoc}
      */
-    function getComparison($key)
+    function getComparison($key = null)
     {
         return $this->getAllComparisons()[self::NAME];
     }

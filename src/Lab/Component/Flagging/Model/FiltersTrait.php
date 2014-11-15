@@ -5,8 +5,8 @@ namespace Lab\Component\Flagging\Model;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-trait FiltersTrait {
-
+trait FiltersTrait
+{
     /**
      * @var null|FilterCollectionInterface[]
      */

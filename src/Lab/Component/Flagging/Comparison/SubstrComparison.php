@@ -24,7 +24,7 @@ class SubstrComparison implements ComparisonInterface
     /**
      * {@inheritDoc}
      */
-    function getComparison($key)
+    function getComparison($key = null)
     {
         return $this->getAllComparisons()[self::NAME];
     }

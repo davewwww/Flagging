@@ -23,7 +23,7 @@ class EntriesDelegatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($strategy->delegate(array("bar", "lorem"), $closureIsFoo));
     }
 
-    public function testAndWalkDelegator()
+    public function testAndDelegator()
     {
         $strategy = new AndEntriesDelegator(new EntryDelegator());
 

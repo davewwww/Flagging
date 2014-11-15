@@ -5,40 +5,57 @@ namespace Lab\Component\Flagging\Model;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class Filter implements FilterInterface {
+class Filter implements FilterInterface
+{
+    /**
+     * @var string
+     */
     protected $name;
+
+    /**
+     * @var null|array
+     */
     protected $parameter;
 
-    function __construct($name, $parameter = null) {
+    /**
+     * @param string $name
+     * @param array  $parameter
+     */
+    function __construct($name, array $parameter = null)
+    {
         $this->name = $name;
         $this->parameter = $parameter;
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
 
     /**
-     * @param mixed $name
+     * {@inheritdoc}
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function getParameter() {
+    public function getParameter()
+    {
         return $this->parameter;
     }
 
     /**
-     * @param mixed $parameter
+     * {@inheritdoc}
      */
-    public function setParameter($parameter) {
+    public function setParameter($parameter)
+    {
         $this->parameter = $parameter;
     }
 }

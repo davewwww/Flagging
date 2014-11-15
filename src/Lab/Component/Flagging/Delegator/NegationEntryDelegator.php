@@ -2,17 +2,13 @@
 
 namespace Lab\Component\Flagging\Delegator;
 
-
 /**
  * @author David Wolter <david@dampfer.net>
  */
 class NegationEntryDelegator implements EntryDelegatorInterface
 {
     /**
-     * @param string   $entry
-     * @param callable $closure
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function delegate($entry, \Closure $closure)
     {
@@ -27,7 +23,7 @@ class NegationEntryDelegator implements EntryDelegatorInterface
      *
      * @return bool
      */
-    protected function isNegated(&$property)
+    private function isNegated(&$property)
     {
         return $property[0] === '!' && $property = substr($property, 1);
     }

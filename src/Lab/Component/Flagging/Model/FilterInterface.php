@@ -23,7 +23,7 @@ interface FilterInterface
     function getParameter();
 
     /**
-     * @param mixed $parameters
+     * @param array|null $parameters
      */
     function setParameter($parameters);
 }

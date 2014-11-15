@@ -5,17 +5,21 @@ namespace Lab\Component\Flagging\Model;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class Value implements ValueInterface {
-
+class Value implements ValueInterface
+{
     use FiltersTrait;
 
+    /**
+     * @var mixed
+     */
     protected $value;
 
     /**
-     * @param $value
+     * @param mixed                       $value
      * @param FilterCollectionInterface[] $filters
      */
-    function __construct($value, array $filters = null) {
+    function __construct($value, array $filters = null)
+    {
         $this->value = $value;
         $this->setFilters($filters);
     }
@@ -23,7 +27,8 @@ class Value implements ValueInterface {
     /**
      * @return mixed
      */
-    function getValue() {
+    function getValue()
+    {
         return $this->value;
     }
 }

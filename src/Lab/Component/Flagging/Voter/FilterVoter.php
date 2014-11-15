@@ -2,14 +2,15 @@
 
 namespace Lab\Component\Flagging\Voter;
 
+use Lab\Component\Flagging\Exception\FlaggingException;
 use Lab\Component\Flagging\Model\FilterInterface;
 use Lab\Component\Flagging\VoteContext;
 
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class FilterVoter implements VoterInterface {
-
+class FilterVoter implements VoterInterface
+{
     /**
      * @var VoterInterface[]
      */
@@ -18,34 +19,38 @@ class FilterVoter implements VoterInterface {
     /**
      * @param VoterInterface[] $voter
      */
-    function __construct($voter) {
+    function __construct(array $voter)
+    {
         $this->voter = $voter;
     }
 
     /**
      * @return mixed
      */
-    public function getName() {
+    public function getName()
+    {
         return "filter";
     }
 
     /**
      * @param FilterInterface $config
-     * @param VoteContext $token
+     * @param VoteContext     $token
      *
      * @return bool
      *
-     * @throws \Exception
+     * @throws FlaggingException
      */
-    public function vote($config, VoteContext $token) {
-        if( !$config instanceof FilterInterface ) {
-            throw new \Exception("need FilterInterface for FilterVoter");
+    public function vote($config, VoteContext $token)
+    {
+        if (!$config instanceof FilterInterface) {
+            throw new FlaggingException(sprintf('%s parameter must be FilterInterface in %s', '$config', __CLASS__));
         }
+
         $voterName = $config->getName();
         $voterConfig = $config->getParameter();
 
-        if( !isset($this->voter[$voterName]) ) {
-            throw new \Exception(sprintf("voter '%s' not found"), $voterName);
+        if (!isset($this->voter[$voterName])) {
+            throw new FlaggingException(sprintf("voter '%s' not found in %s", $voterName, __CLASS__));
         }
 
         return $this->voter[$voterName]->vote($voterConfig, $token);

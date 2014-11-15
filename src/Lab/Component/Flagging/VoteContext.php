@@ -3,6 +3,8 @@
 namespace Lab\Component\Flagging;
 
 /**
+ * :TODO: refactor
+ *
  * @author David Wolter <david@dampfer.net>
  */
 class VoteContext
@@ -28,7 +30,7 @@ class VoteContext
     protected $results;
 
     /**
-     * @param array|null $params
+     * @param array|null  $params
      * @param string|null $name
      */
     public function __construct(array $params = null, $name = null)
@@ -73,7 +75,7 @@ class VoteContext
      * Sets the value for the specified key.
      *
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public function setParam($key, $value)
     {
@@ -131,13 +133,14 @@ class VoteContext
     }
 
     /**
+     * @deprecated
+     *
      * @param string $name
      */
     public function setName($name)
     {
         $this->name = $name;
     }
-
 
     /**
      * @param mixed|null $key
@@ -174,6 +177,7 @@ class VoteContext
     /**
      * @deprecated
      * :TODO: use own Cache Obj
+     *
      * @param string $resultId
      *
      * @return Boolean|null
@@ -186,7 +190,8 @@ class VoteContext
     /**
      * @deprecated
      * :TODO: use own Cache Obj
-     * @param string $resultId
+     *
+     * @param string  $resultId
      * @param Boolean $result
      */
     function setResult($resultId, $result)
@@ -197,6 +202,7 @@ class VoteContext
     /**
      * @deprecated
      * :TODO: use own Cache Obj
+     *
      * @param string $voterName
      *
      * @return string
@@ -213,6 +219,6 @@ class VoteContext
 //            }
 //        }
 
-        return $voterName . "_" . json_encode($this->getConfig());
+        return $voterName."_".json_encode($this->getConfig());
     }
 }

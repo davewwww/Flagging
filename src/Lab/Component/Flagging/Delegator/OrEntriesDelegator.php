@@ -5,7 +5,8 @@ namespace Lab\Component\Flagging\Delegator;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class OrEntriesDelegator implements EntriesDelegatorInterface {
+class OrEntriesDelegator implements EntriesDelegatorInterface
+{
     /**
      * @var EntryDelegatorInterface
      */
@@ -14,19 +15,18 @@ class OrEntriesDelegator implements EntriesDelegatorInterface {
     /**
      * @param EntryDelegatorInterface $entryDelegator
      */
-    function __construct(EntryDelegatorInterface $entryDelegator) {
+    function __construct(EntryDelegatorInterface $entryDelegator)
+    {
         $this->entryDelegator = $entryDelegator;
     }
 
     /**
-     * @param array $entries
-     * @param callable $closure
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function delegate(array $entries, \Closure $closure) {
-        foreach( $entries as $value ) {
-            if( $this->entryDelegator->delegate($value, $closure) ) {
+    public function delegate(array $entries, \Closure $closure)
+    {
+        foreach ($entries as $value) {
+            if ($this->entryDelegator->delegate($value, $closure)) {
                 return true;
             }
         }

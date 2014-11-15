@@ -5,12 +5,12 @@ namespace Lab\Component\Flagging\Comparison;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class BitComparison implements ComparisonInterface
+class ModulousComparison implements ComparisonInterface
 {
-    const NAME = "bit";
+    const NAME = "modulous";
 
     /**
-     * @return \Closure[]
+     * {@inheritDoc}
      */
     function getAllComparisons()
     {
@@ -24,7 +24,7 @@ class BitComparison implements ComparisonInterface
     /**
      * {@inheritDoc}
      */
-    function getComparison($key)
+    function getComparison($key = null)
     {
         return $this->getAllComparisons()[self::NAME];
     }

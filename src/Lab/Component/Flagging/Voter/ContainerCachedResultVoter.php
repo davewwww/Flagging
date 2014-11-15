@@ -16,16 +16,16 @@ class ContainerCachedResultVoter implements VoterInterface
     /**
      * @var VoterInterface
      */
-    protected $voter;
+    protected $containerVoter;
 
     /**
      * @param string         $name
-     * @param VoterInterface $voter
+     * @param VoterInterface $containerVoter
      */
-    function __construct($name, $voter)
+    function __construct($name, $containerVoter)
     {
         $this->name = $name;
-        $this->voter = $voter;
+        $this->containerVoter = $containerVoter;
     }
 
     /**
@@ -44,7 +44,7 @@ class ContainerCachedResultVoter implements VoterInterface
         $resultId = $token->createResultId($voterName = key($entry));
 
         if (null === $result = $token->getResult($resultId)) {
-            $result = $this->voter->vote($config, $token);
+            $result = $this->containerVoter->vote($config, $token);
 
             $token->setResult($resultId, $result);
         }

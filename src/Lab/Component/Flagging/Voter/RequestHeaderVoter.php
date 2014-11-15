@@ -6,6 +6,7 @@ use Lab\Component\Flagging\Comparison\ComparisonInterface;
 use Lab\Component\Flagging\VoteContext;
 
 /**
+ * :TODO: refactor!
  * @author David Wolter <david@dampfer.net>
  */
 class RequestHeaderVoter implements VoterInterface
@@ -36,8 +37,13 @@ class RequestHeaderVoter implements VoterInterface
      * @param string              $nullValue
      * @param string|null         $compareType
      */
-    public function __construct(ComparisonInterface $comparison, $header, $name = "request_header", $nullValue = null, $compareType = null)
-    {
+    public function __construct(
+        ComparisonInterface $comparison,
+        $header,
+        $name = "request_header",
+        $nullValue = null,
+        $compareType = null
+    ) {
         $this->comparison = $comparison;
         $this->header = $header;
         $this->name = $name;

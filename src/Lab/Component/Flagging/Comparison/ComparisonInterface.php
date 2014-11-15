@@ -8,11 +8,11 @@ namespace Lab\Component\Flagging\Comparison;
 interface ComparisonInterface
 {
     /**
-     * @param string $key
+     * @param string|null $key
      *
      * @return \Closure
      */
-    function getComparison($key);
+    function getComparison($key = null);
 
     /**
      * @return \Closure[]

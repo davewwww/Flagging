@@ -10,7 +10,7 @@ class BoolComparison implements ComparisonInterface
     const NAME = "bool";
 
     /**
-     * @return \Closure[]
+     * {@inheritDoc}
      */
     function getAllComparisons()
     {
@@ -24,7 +24,7 @@ class BoolComparison implements ComparisonInterface
     /**
      * {@inheritDoc}
      */
-    function getComparison($key)
+    function getComparison($key = null)
     {
         return $this->getAllComparisons()[self::NAME];
     }

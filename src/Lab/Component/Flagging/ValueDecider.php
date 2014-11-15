@@ -7,20 +7,17 @@ use Lab\Component\Flagging\Model\FeatureInterface;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class ValueDecider extends FeatureDecider implements FeatureDeciderInterface {
-
+class ValueDecider extends FeatureDecider implements FeatureDeciderInterface
+{
     /**
-     * @param FeatureInterface $feature
-     * @param VoteContext $context
-     * @param mixed $default
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function decideFeature(FeatureInterface $feature, VoteContext $context, $default = null) {
-        if( parent::decideFeature($feature, $context) ) {
-            foreach( $feature->getValues() as $key => $value ) {
-                $context->setName($feature->getName() . "_" . $key);
-                if( $this->voteFilters($value->getFilters(), $context) ) {
+    public function decideFeature(FeatureInterface $feature, VoteContext $context, $default = null)
+    {
+        if (parent::decideFeature($feature, $context)) {
+            foreach ($feature->getValues() as $key => $value) {
+                $context->setName($feature->getName()."_".$key);
+                if ($this->voteFilters($value->getFilters(), $context)) {
                     return $value->getValue();
                 }
             }

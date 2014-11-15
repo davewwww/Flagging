@@ -10,8 +10,6 @@ use Lab\Component\Flagging\VoteContext;
 interface VoterInterface
 {
     /**
-     * Returns the name of the voter.
-     *
      * @return string
      */
     function getName();

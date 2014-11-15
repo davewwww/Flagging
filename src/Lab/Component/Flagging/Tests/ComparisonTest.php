@@ -3,12 +3,12 @@
 namespace Lab\Component\Flagging\Tests;
 
 use Lab\Component\Flagging\Comparison\BetweenComparison;
-use Lab\Component\Flagging\Comparison\BitComparison;
 use Lab\Component\Flagging\Comparison\BoolComparison;
 use Lab\Component\Flagging\Comparison\ContainerComparison;
+use Lab\Component\Flagging\Comparison\DateFormatComparison;
 use Lab\Component\Flagging\Comparison\DefaultComparison;
 use Lab\Component\Flagging\Comparison\DefaultOperatorComparison;
-use Lab\Component\Flagging\Comparison\SameDayComparison;
+use Lab\Component\Flagging\Comparison\ModulousComparison;
 use Lab\Component\Flagging\Comparison\SubstrComparison;
 use Lab\Component\Flagging\Comparison\VersionComparison;
 
@@ -16,13 +16,25 @@ class ComparisonTest extends \PHPUnit_Framework_TestCase
 {
     public function testContainerComparison()
     {
-        $containerComparison = new ContainerComparison(array(
-            DefaultComparison::NAME => $defaultComparison = new DefaultComparison(),
-            VersionComparison::NAME => $versionComparison = new VersionComparison(),
-        ));
+        $containerComparison = new ContainerComparison(
+            array(
+                DefaultComparison::NAME => $defaultComparison = new DefaultComparison(),
+                VersionComparison::NAME => $versionComparison = new VersionComparison(),
+            )
+        );
 
-        $this->assertInstanceOf(get_class($defaultComparison), $containerComparison->getComparison(DefaultComparison::NAME));
-        $this->assertInstanceOf(get_class($versionComparison), $containerComparison->getComparison(VersionComparison::NAME));
+        $this->assertInstanceOf(
+            get_class($defaultComparison),
+            $containerComparison->getComparison(
+                DefaultComparison::NAME
+            )
+        );
+        $this->assertInstanceOf(
+            get_class($versionComparison),
+            $containerComparison->getComparison(
+                VersionComparison::NAME
+            )
+        );
     }
 
     public function testDefaultOperatorComparison()
@@ -44,9 +56,9 @@ class ComparisonTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($closures["=="](1, 2));
     }
 
-    public function testBitComparison()
+    public function testModulousComparison()
     {
-        $closure = (new BitComparison())->getComparison(BitComparison::NAME);
+        $closure = (new ModulousComparison())->getComparison();
 
         $etalon = 3;
         $this->assertTrue($closure("1", $etalon));
@@ -57,7 +69,7 @@ class ComparisonTest extends \PHPUnit_Framework_TestCase
 
     public function testBoolComparison()
     {
-        $closure = (new BoolComparison())->getComparison(BoolComparison::NAME);
+        $closure = (new BoolComparison())->getComparison();
 
         $etalon = "true";
         $this->assertTrue($closure(true, $etalon));
@@ -78,7 +90,7 @@ class ComparisonTest extends \PHPUnit_Framework_TestCase
 
     public function testSubstrComparison()
     {
-        $closure = (new SubstrComparison())->getComparison(SubstrComparison::NAME);
+        $closure = (new SubstrComparison())->getComparison();
 
         $etalon = "lorem ipsum foo bar";
         $this->assertTrue($closure("lorem", $etalon));
@@ -90,7 +102,7 @@ class ComparisonTest extends \PHPUnit_Framework_TestCase
 
     public function testDefaultComparison()
     {
-        $closure = (new DefaultComparison())->getComparison(DefaultComparison::NAME);
+        $closure = (new DefaultComparison())->getComparison();
 
         $etalon = "foobar";
         $this->assertTrue($closure("foobar", $etalon));
@@ -103,7 +115,7 @@ class ComparisonTest extends \PHPUnit_Framework_TestCase
 
     public function testBetweenComparison()
     {
-        $closure = (new BetweenComparison())->getComparison(BetweenComparison::NAME);
+        $closure = (new BetweenComparison())->getComparison();
 
         $etalon = 50;
         $this->assertTrue($closure($etalon, 1, 100));
@@ -115,7 +127,7 @@ class ComparisonTest extends \PHPUnit_Framework_TestCase
 
     public function testSameDayComparison()
     {
-        $closure = (new SameDayComparison())->getComparison(SameDayComparison::NAME);
+        $closure = (new DateFormatComparison("day", "Y-m-d"))->getComparison();
 
         $etalon = "2014-01-01";
         $this->assertTrue($closure($etalon, $etalon));
@@ -133,7 +145,7 @@ class ComparisonTest extends \PHPUnit_Framework_TestCase
 
     public function testVersionComparison()
     {
-        $closure = (new VersionComparison())->getComparison(VersionComparison::NAME);
+        $closure = (new VersionComparison())->getComparison();
 
         $etalon = "2.0";
         $operator = "gt";

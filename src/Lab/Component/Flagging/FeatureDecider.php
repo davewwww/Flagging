@@ -7,10 +7,11 @@ use Lab\Component\Flagging\Model\FeatureManagerInterface;
 use Lab\Component\Flagging\Voter\VoterInterface;
 
 /**
+ * :TODO: refactor
  * @author David Wolter <david@dampfer.net>
  */
-class FeatureDecider implements FeatureDeciderInterface {
-
+class FeatureDecider implements FeatureDeciderInterface
+{
     /**
      * @var FeatureManagerInterface
      */
@@ -23,22 +24,20 @@ class FeatureDecider implements FeatureDeciderInterface {
 
     /**
      * @param FeatureManagerInterface $featureManager
-     * @param VoterInterface $filterCollectionVoter
+     * @param VoterInterface          $filterCollectionVoter
      */
-    function __construct(FeatureManagerInterface $featureManager, VoterInterface $filterCollectionVoter) {
+    function __construct(FeatureManagerInterface $featureManager, VoterInterface $filterCollectionVoter)
+    {
         $this->featureManager = $featureManager;
         $this->filterCollectionVoter = $filterCollectionVoter;
     }
 
     /**
-     * @param FeatureInterface $feature
-     * @param VoteContext $context
-     * @param mixed $default
-     *
-     * @return bool
+     * {@inheritdoc}
      */
-    public function decideFeature(FeatureInterface $feature, VoteContext $context, $default = null) {
-        if( !$feature->isEnabled() ) {
+    public function decideFeature(FeatureInterface $feature, VoteContext $context, $default = null)
+    {
+        if (!$feature->isEnabled()) {
             return false;
         }
 
@@ -49,34 +48,42 @@ class FeatureDecider implements FeatureDeciderInterface {
     }
 
     /**
-     * @param string $name
-     * @param VoteContext $context
-     * @param mixed $default
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function decide($name, VoteContext $context, $default = null) {
-        if( null !== $feature = $this->featureManager->findFeatureByName($name) ) {
+    public function decide($name, VoteContext $context, $default = null)
+    {
+        if (null !== $feature = $this->featureManager->findFeatureByName($name)) {
             return $this->decideFeature($feature, $context, $default);
         }
 
         return $default;
     }
 
-    protected function voteFilters($filters, $context) {
+    /**
+     * @param $filters
+     * @param $context
+     *
+     * @return bool
+     */
+    protected function voteFilters($filters, $context)
+    {
         return !empty($filters) ? $this->filterCollectionVoter->vote($filters, $context) : true;
     }
 
     /**
+     * @deprecated
      * @param VoteContext $token
-     * @param array $required
+     * @param array       $required
      *
      * @throws \Exception
      */
-    protected function checkParameter(VoteContext $token, array $required) {
-        if( count($required) ) {
-            if( count($diff = array_diff($required, array_merge(array( "user" ), array_keys($token->getParams())))) ) {
-                throw new \Exception(sprintf("expect for feature '%s' this parameters: %s", $token->getName(), implode(", ", $diff)));
+    protected function checkParameter(VoteContext $token, array $required)
+    {
+        if (count($required)) {
+            if (count($diff = array_diff($required, array_merge(array("user"), array_keys($token->getParams()))))) {
+                throw new \Exception(
+                    sprintf("expect for feature '%s' this parameters: %s", $token->getName(), implode(", ", $diff))
+                );
             }
         }
     }
