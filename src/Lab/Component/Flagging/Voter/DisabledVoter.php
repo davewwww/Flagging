@@ -2,7 +2,7 @@
 
 namespace Lab\Component\Flagging\Voter;
 
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\Context;
 
 /**
  * @author David Wolter <david@dampfer.net>
@@ -22,7 +22,7 @@ class DisabledVoter implements VoterInterface
     /**
      * {@inheritDoc}
      */
-    function vote($config, VoteContext $token)
+    function vote($config, Context $context)
     {
         return false;
     }

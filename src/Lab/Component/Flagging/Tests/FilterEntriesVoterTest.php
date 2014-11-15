@@ -9,7 +9,7 @@ use Lab\Component\Flagging\Delegator\AndEntriesDelegator;
 use Lab\Component\Flagging\Delegator\EntryDelegator;
 use Lab\Component\Flagging\Delegator\NegationEntryDelegator;
 use Lab\Component\Flagging\Delegator\OrEntriesDelegator;
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\Context;
 use Lab\Component\Flagging\Voter\FilterVoter;
 use Lab\Component\Flagging\Voter\DateRangeVoter;
 use Lab\Component\Flagging\Voter\StringContainsVoter;
@@ -17,7 +17,7 @@ use Lab\Component\Flagging\Voter\StringContainsVoter;
 class FilternEntriesVoterTest extends Fixtures {
     public function testVoteEntriesvoter() {
         $voteEntriesvoter = $this->getFilterEntriesVoter();
-        $context = new VoteContext();
+        $context = new Context();
 
         $this->assertTrue($voteEntriesvoter->vote(array(
             new Filter("substr", "foo"),

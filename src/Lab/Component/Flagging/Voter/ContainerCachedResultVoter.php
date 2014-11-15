@@ -2,7 +2,8 @@
 
 namespace Lab\Component\Flagging\Voter;
 
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\CachedContext;
+use Lab\Component\Flagging\Context\Context;
 
 /**
  * @author David Wolter <david@dampfer.net>
@@ -39,16 +40,20 @@ class ContainerCachedResultVoter implements VoterInterface
     /**
      * {@inheritDoc}
      */
-    public function vote($config, VoteContext $token)
+    public function vote($config, Context $context)
     {
-        $resultId = $token->createResultId($voterName = key($entry));
+        if ($context instanceof CachedContext) {
+            $resultId = $context->createResultId($voterName = key($entry));
 
-        if (null === $result = $token->getResult($resultId)) {
-            $result = $this->containerVoter->vote($config, $token);
+            if (null === $result = $context->getResult($resultId)) {
+                $result = $this->containerVoter->vote($config, $context);
 
-            $token->setResult($resultId, $result);
+                $context->setResult($resultId, $result);
+            }
+
+            return $result;
         }
 
-        return $result;
+        return $this->containerVoter->vote($config, $context);
     }
 }

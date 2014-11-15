@@ -2,6 +2,7 @@
 
 namespace Lab\Component\Flagging;
 
+use Lab\Component\Flagging\Context\Context;
 use Lab\Component\Flagging\Model\FeatureInterface;
 
 /**
@@ -12,7 +13,7 @@ class ValueDecider extends FeatureDecider implements FeatureDeciderInterface
     /**
      * {@inheritdoc}
      */
-    public function decideFeature(FeatureInterface $feature, VoteContext $context, $default = null)
+    public function decideFeature(FeatureInterface $feature, Context $context, $default = null)
     {
         if (parent::decideFeature($feature, $context)) {
             foreach ($feature->getValues() as $key => $value) {

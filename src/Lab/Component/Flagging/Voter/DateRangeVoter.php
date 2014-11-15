@@ -3,7 +3,7 @@
 namespace Lab\Component\Flagging\Voter;
 
 use DateTime;
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\Context;
 
 /**
  * @author David Wolter <david@dampfer.net>
@@ -25,7 +25,7 @@ class DateRangeVoter implements VoterInterface
      * :TODO: check if already date obj
      * {@inheritDoc}
      */
-    public function vote($config, VoteContext $token)
+    public function vote($config, Context $context)
     {
         $now = new DateTime();
 

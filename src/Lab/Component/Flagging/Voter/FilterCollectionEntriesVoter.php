@@ -2,9 +2,9 @@
 
 namespace Lab\Component\Flagging\Voter;
 
+use Lab\Component\Flagging\Context\Context;
 use Lab\Component\Flagging\Delegator\EntriesDelegatorInterface;
 use Lab\Component\Flagging\Model\FilterCollectionInterface;
-use Lab\Component\Flagging\VoteContext;
 
 /**
  * @author David Wolter <david@dampfer.net>
@@ -43,11 +43,11 @@ class FilterCollectionEntriesVoter implements VoterInterface
 
     /**
      * @param FilterCollectionInterface[] $config
-     * @param VoteContext                 $token
+     * @param Context                     $context
      *
      * @return bool
      */
-    public function vote($config, VoteContext $token)
+    public function vote($config, Context $context)
     {
         if (empty($config)) {
             return true;
@@ -55,8 +55,8 @@ class FilterCollectionEntriesVoter implements VoterInterface
 
         return $this->entriesDelegator->delegate(
             $config,
-            function (FilterCollectionInterface $filterCollection) use ($token) {
-                return $this->filterEntriesVoter->vote($filterCollection->getFilter(), $token);
+            function (FilterCollectionInterface $filterCollection) use ($context) {
+                return $this->filterEntriesVoter->vote($filterCollection->getFilter(), $context);
             }
         );
     }

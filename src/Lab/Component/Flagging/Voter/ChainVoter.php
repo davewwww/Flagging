@@ -3,7 +3,7 @@
 namespace Lab\Component\Flagging\Voter;
 
 use Lab\Component\Flagging\Delegator\EntriesDelegatorInterface;
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\Context;
 
 /**
  * @author David Wolter <david@dampfer.net>
@@ -46,12 +46,12 @@ class ChainVoter implements VoterInterface
     /**
      * {@inheritDoc}
      */
-    public function vote($config, VoteContext $token)
+    public function vote($config, Context $context)
     {
         return $this->delegator->delegate(
             $this->voters,
-            function (VoterInterface $voter) use ($config, $token) {
-                return $voter->vote($config, $token);
+            function (VoterInterface $voter) use ($config, $context) {
+                return $voter->vote($config, $context);
             }
         );
     }

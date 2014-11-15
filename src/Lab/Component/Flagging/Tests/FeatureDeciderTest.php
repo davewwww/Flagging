@@ -5,13 +5,13 @@ namespace Lab\Component\Flagging\Tests;
 use Lab\Component\Flagging\Model\Feature;
 use Lab\Component\Flagging\Model\Filter;
 use Lab\Component\Flagging\Model\FilterCollection;
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\Context;
 
 class FeatureDeciderTest extends Fixtures {
 
     public function testFeatureDecider() {
         $featureDecider = $this->getFeatureDecider();
-        $context = new VoteContext();
+        $context = new Context();
 
         $feature = new Feature("feature", array(
             new FilterCollection(array(

@@ -5,7 +5,7 @@ namespace Lab\Component\Flagging\Tests;
 use Lab\Component\Flagging\Delegator\EntryDelegator;
 use Lab\Component\Flagging\Delegator\NegationEntryDelegator;
 use Lab\Component\Flagging\Delegator\OrEntriesDelegator;
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\Context;
 use Lab\Component\Flagging\Voter\ChainVoter;
 use Lab\Component\Flagging\Voter\DateRangeVoter;
 use Lab\Component\Flagging\Voter\DisabledVoter;
@@ -19,7 +19,7 @@ class VoterTest extends \PHPUnit_Framework_TestCase
     {
         $string = "lorem ipsum";
         $voter = new StringContainsVoter(new OrEntriesDelegator(new NegationEntryDelegator()), "string", $string);
-        $context = new VoteContext();
+        $context = new Context();
 
         $this->assertTrue($voter->vote(array("lorem"), $context));
         $this->assertTrue($voter->vote(array("lorem", "ipsum"), $context));
@@ -34,7 +34,7 @@ class VoterTest extends \PHPUnit_Framework_TestCase
     public function testDateRangeVoter()
     {
         $voter = new DateRangeVoter();
-        $context = new VoteContext();
+        $context = new Context();
 
         $this->assertTrue($voter->vote(array("from" => "-1 day", "to" => "+1 day"), $context));
         $this->assertTrue($voter->vote(array("from" => "-1 day"), $context));
@@ -49,7 +49,7 @@ class VoterTest extends \PHPUnit_Framework_TestCase
     public function testDisabledVoter()
     {
         $voter = new DisabledVoter();
-        $context = new VoteContext();
+        $context = new Context();
 
         $this->assertFalse($voter->vote(null, $context));
     }
@@ -57,7 +57,7 @@ class VoterTest extends \PHPUnit_Framework_TestCase
     public function testRandomVoter()
     {
         $voter = new RandomVoter();
-        $context = new VoteContext();
+        $context = new Context();
 
         $result = $voter->vote(null, $context);
         $this->assertTrue($result == true || $result == false);
@@ -69,7 +69,7 @@ class VoterTest extends \PHPUnit_Framework_TestCase
         $voter2 = new StringContainsVoter(new OrEntriesDelegator(new NegationEntryDelegator()), "string", "foo bar");
         $voter = new ChainVoter(new OrEntriesDelegator(new EntryDelegator()), array($voter1, $voter2), "loremfoobar");
 
-        $context = new VoteContext();
+        $context = new Context();
 
         $this->assertTrue($voter->vote(array("lorem"), $context));
         $this->assertTrue($voter->vote(array("lorem", "ipsum"), $context));

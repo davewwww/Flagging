@@ -4,7 +4,7 @@ namespace Lab\Component\Flagging\Voter;
 
 use Lab\Component\Flagging\Exception\FlaggingException;
 use Lab\Component\Flagging\Model\FilterInterface;
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\Context;
 
 /**
  * @author David Wolter <david@dampfer.net>
@@ -34,13 +34,13 @@ class FilterVoter implements VoterInterface
 
     /**
      * @param FilterInterface $config
-     * @param VoteContext     $token
+     * @param Context         $context
      *
      * @return bool
      *
      * @throws FlaggingException
      */
-    public function vote($config, VoteContext $token)
+    public function vote($config, Context $context)
     {
         if (!$config instanceof FilterInterface) {
             throw new FlaggingException(sprintf('%s parameter must be FilterInterface in %s', '$config', __CLASS__));
@@ -53,6 +53,6 @@ class FilterVoter implements VoterInterface
             throw new FlaggingException(sprintf("voter '%s' not found in %s", $voterName, __CLASS__));
         }
 
-        return $this->voter[$voterName]->vote($voterConfig, $token);
+        return $this->voter[$voterName]->vote($voterConfig, $context);
     }
 }

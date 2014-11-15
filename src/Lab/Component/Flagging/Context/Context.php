@@ -1,13 +1,13 @@
 <?php
 
-namespace Lab\Component\Flagging;
+namespace Lab\Component\Flagging\Context;
 
 /**
  * :TODO: refactor
  *
  * @author David Wolter <david@dampfer.net>
  */
-class VoteContext
+class Context
 {
     /**
      * @var string|null
@@ -25,11 +25,6 @@ class VoteContext
     protected $config;
 
     /**
-     * @var array
-     */
-    protected $results;
-
-    /**
      * @param array|null  $params
      * @param string|null $name
      */
@@ -40,6 +35,29 @@ class VoteContext
     }
 
     /**
+     * @param mixed|null $key
+     *
+     * @return array|null
+     */
+    function getConfig($key = null)
+    {
+        if (null !== $key) {
+            return isset($this->config[$key]) ? $this->config[$key] : null;
+        }
+
+        return $this->config;
+    }
+
+    /**
+     * @param array $config
+     */
+    function setConfig(array $config = null)
+    {
+        $this->config = $config;
+    }
+
+    /**
+     * @deprecated
      * Returns the parameters.
      *
      * @return array
@@ -50,6 +68,7 @@ class VoteContext
     }
 
     /**
+     * @deprecated
      * Returns the value for the specified key.
      *
      * @param string $key
@@ -62,6 +81,8 @@ class VoteContext
     }
 
     /**
+     * @deprecated
+     *
      * @param string $key
      *
      * @return bool
@@ -125,6 +146,7 @@ class VoteContext
     }
 
     /**
+     * @deprecated
      * @return string|null
      */
     public function getName()
@@ -142,83 +164,4 @@ class VoteContext
         $this->name = $name;
     }
 
-    /**
-     * @param mixed|null $key
-     *
-     * @return array|null
-     */
-    function getConfig($key = null)
-    {
-        if (null !== $key) {
-            return isset($this->config[$key]) ? $this->config[$key] : null;
-        }
-
-        return $this->config;
-    }
-
-    /**
-     * @param array $config
-     */
-    function setConfig(array $config = null)
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * @deprecated
-     * :TODO: use own Cache Obj
-     * @return array
-     */
-    function getResults()
-    {
-        return $this->results;
-    }
-
-    /**
-     * @deprecated
-     * :TODO: use own Cache Obj
-     *
-     * @param string $resultId
-     *
-     * @return Boolean|null
-     */
-    function getResult($resultId)
-    {
-        return isset($this->results[$resultId]) ? $this->results[$resultId] : null;
-    }
-
-    /**
-     * @deprecated
-     * :TODO: use own Cache Obj
-     *
-     * @param string  $resultId
-     * @param Boolean $result
-     */
-    function setResult($resultId, $result)
-    {
-        $this->results[$resultId] = $result;
-    }
-
-    /**
-     * @deprecated
-     * :TODO: use own Cache Obj
-     *
-     * @param string $voterName
-     *
-     * @return string
-     */
-    function createResultId($voterName)
-    {
-//        if (is_array($params = $this->getParams())) {
-//            foreach ($params as $key => $value) {
-//                if (is_object($value)) {
-//                    if (method_exists($value, "getId")) {
-//                        $voterConfig[$key] = $value->getId();
-//                    }
-//                }
-//            }
-//        }
-
-        return $voterName."_".json_encode($this->getConfig());
-    }
 }

@@ -14,7 +14,7 @@ use Lab\Component\Flagging\Delegator\AndEntriesDelegator;
 use Lab\Component\Flagging\Delegator\EntryDelegator;
 use Lab\Component\Flagging\Delegator\NegationEntryDelegator;
 use Lab\Component\Flagging\Delegator\OrEntriesDelegator;
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\Context;
 use Lab\Component\Flagging\Voter\FilterVoter;
 use Lab\Component\Flagging\Voter\DateRangeVoter;
 use Lab\Component\Flagging\Voter\DisabledVoter;
@@ -25,7 +25,7 @@ class ValueDeciderTest extends Fixtures {
 
 
     public function testGetValue() {
-        $context = new VoteContext();
+        $context = new Context();
 
         $feature = new Feature("feature", null, array(
             new Value("foo"),
@@ -34,7 +34,7 @@ class ValueDeciderTest extends Fixtures {
     }
 
     public function testGetFirstValue() {
-        $context = new VoteContext();
+        $context = new Context();
         $feature = new Feature("feature", null, array(
             new Value("foo"),
             new Value("bar"),
@@ -43,7 +43,7 @@ class ValueDeciderTest extends Fixtures {
     }
 
     public function testFeatureIsDisabled() {
-        $context = new VoteContext();
+        $context = new Context();
         $feature = new Feature("feature", array( new FilterCollection(array( new Filter("disabled") )) ), array(
             new Value("foo")
         ));
@@ -51,7 +51,7 @@ class ValueDeciderTest extends Fixtures {
     }
 
     public function testValueThatMatches() {
-        $context = new VoteContext();
+        $context = new Context();
         $feature = new Feature("feature", null, array(
             new Value("foo", array( new FilterCollection(array( new Filter("disabled") )) )),
             new Value("bar"),
@@ -60,7 +60,7 @@ class ValueDeciderTest extends Fixtures {
     }
 
     public function testDefaultValueFromDisabledFeature() {
-        $context = new VoteContext();
+        $context = new Context();
         $feature = new Feature("feature", array( new FilterCollection(array( new Filter("disabled") )) ), array(
             new Value("foo")
         ));

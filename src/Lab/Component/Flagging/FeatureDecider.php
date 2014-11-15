@@ -2,12 +2,14 @@
 
 namespace Lab\Component\Flagging;
 
+use Lab\Component\Flagging\Context\Context;
 use Lab\Component\Flagging\Model\FeatureInterface;
 use Lab\Component\Flagging\Model\FeatureManagerInterface;
 use Lab\Component\Flagging\Voter\VoterInterface;
 
 /**
  * :TODO: refactor
+ *
  * @author David Wolter <david@dampfer.net>
  */
 class FeatureDecider implements FeatureDeciderInterface
@@ -35,7 +37,7 @@ class FeatureDecider implements FeatureDeciderInterface
     /**
      * {@inheritdoc}
      */
-    public function decideFeature(FeatureInterface $feature, VoteContext $context, $default = null)
+    public function decideFeature(FeatureInterface $feature, Context $context, $default = null)
     {
         if (!$feature->isEnabled()) {
             return false;
@@ -50,7 +52,7 @@ class FeatureDecider implements FeatureDeciderInterface
     /**
      * {@inheritdoc}
      */
-    public function decide($name, VoteContext $context, $default = null)
+    public function decide($name, Context $context, $default = null)
     {
         if (null !== $feature = $this->featureManager->findFeatureByName($name)) {
             return $this->decideFeature($feature, $context, $default);
@@ -72,17 +74,18 @@ class FeatureDecider implements FeatureDeciderInterface
 
     /**
      * @deprecated
-     * @param VoteContext $token
-     * @param array       $required
+     *
+     * @param Context $context
+     * @param array   $required
      *
      * @throws \Exception
      */
-    protected function checkParameter(VoteContext $token, array $required)
+    protected function checkParameter(Context $context, array $required)
     {
         if (count($required)) {
-            if (count($diff = array_diff($required, array_merge(array("user"), array_keys($token->getParams()))))) {
+            if (count($diff = array_diff($required, array_merge(array("user"), array_keys($context->getParams()))))) {
                 throw new \Exception(
-                    sprintf("expect for feature '%s' this parameters: %s", $token->getName(), implode(", ", $diff))
+                    sprintf("expect for feature '%s' this parameters: %s", $context->getName(), implode(", ", $diff))
                 );
             }
         }

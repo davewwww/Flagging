@@ -3,7 +3,7 @@
 namespace Lab\Component\Flagging\Voter;
 
 use Lab\Component\Flagging\Comparison\ComparisonInterface;
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\Context;
 
 /**
  * :TODO: refactor!
@@ -62,9 +62,9 @@ class RequestHeaderVoter implements VoterInterface
     /**
      * {@inheritDoc}
      */
-    public function vote($config, VoteContext $token)
+    public function vote($config, Context $context)
     {
-        $properties = $token->getParams();
+        $properties = $context->getParams();
 
         if (isset($_SERVER[$this->header])) {
             $value = $_SERVER[$this->header];

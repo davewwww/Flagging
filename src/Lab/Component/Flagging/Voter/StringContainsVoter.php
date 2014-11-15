@@ -3,7 +3,7 @@
 namespace Lab\Component\Flagging\Voter;
 
 use Lab\Component\Flagging\Delegator\EntriesDelegatorInterface;
-use Lab\Component\Flagging\VoteContext;
+use Lab\Component\Flagging\Context\Context;
 
 /**
  * @author David Wolter <david@dampfer.net>
@@ -48,7 +48,7 @@ class StringContainsVoter implements VoterInterface
     /**
      * {@inheritDoc}
      */
-    public function vote($config, VoteContext $token)
+    public function vote($config, Context $context)
     {
         if (is_scalar($config)) {
             $config = array($config);
@@ -56,7 +56,7 @@ class StringContainsVoter implements VoterInterface
 
         return $this->delegator->delegate(
             $config,
-            function ($entry) use ($token) {
+            function ($entry) use ($context) {
                 return false !== strpos($this->string, $entry);
             }
         );
