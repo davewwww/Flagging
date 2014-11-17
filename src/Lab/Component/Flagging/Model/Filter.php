@@ -13,15 +13,15 @@ class Filter implements FilterInterface
     protected $name;
 
     /**
-     * @var null|array
+     * @var mixed
      */
     protected $parameter;
 
     /**
      * @param string $name
-     * @param array  $parameter
+     * @param mixed  $parameter
      */
-    function __construct($name, array $parameter = null)
+    function __construct($name, $parameter = null)
     {
         $this->name = $name;
         $this->parameter = $parameter;
@@ -57,5 +57,13 @@ class Filter implements FilterInterface
     public function setParameter($parameter)
     {
         $this->parameter = $parameter;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getName()."_".json_encode($this->getParameter());
     }
 }

@@ -18,12 +18,12 @@ interface FilterInterface
     function setName($name);
 
     /**
-     * @return array
+     * @return mixed
      */
     function getParameter();
 
     /**
-     * @param array|null $parameters
+     * @param mixed $parameters
      */
     function setParameter($parameters);
 }

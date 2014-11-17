@@ -2,19 +2,19 @@
 
 namespace Lab\Component\Flagging\Voter;
 
+use Lab\Component\Flagging\Context\Context;
 use Lab\Component\Flagging\Exception\FlaggingException;
 use Lab\Component\Flagging\Model\FilterInterface;
-use Lab\Component\Flagging\Context\Context;
 
 /**
  * @author David Wolter <david@dampfer.net>
  */
-class FilterVoter implements VoterInterface
+class CachedFilterVoter implements VoterInterface
 {
     /**
-     * @var VoterInterface[]
+     * @var VoterInterface
      */
-    protected $voter;
+    protected $filterVoter;
 
     /**
      * @var string
@@ -22,12 +22,12 @@ class FilterVoter implements VoterInterface
     protected $name;
 
     /**
-     * @param VoterInterface[] $voter
-     * @param string           $name
+     * @param VoterInterface $filterVoter
+     * @param string         $name
      */
-    function __construct(array $voter, $name = "filter")
+    function __construct($filterVoter, $name = "cached_filter")
     {
-        $this->voter = $voter;
+        $this->filterVoter = $filterVoter;
         $this->name = $name;
     }
 
@@ -55,13 +55,13 @@ class FilterVoter implements VoterInterface
             );
         }
 
-        $voterName = $config->getName();
-        $voterConfig = $config->getParameter();
-
-        if (!isset($this->voter[$voterName])) {
-            throw new FlaggingException(sprintf("voter '%s' not found in %s", $voterName, __CLASS__));
+        if (null === $result = $context->getResultCache()->getResult((string)$config)) {
+            $context->getResultCache()->addResult(
+                (string)$config,
+                $result = $this->filterVoter->vote($config, $context)
+            );
         }
 
-        return $this->voter[$voterName]->vote($voterConfig, $context);
+        return $result;
     }
 }

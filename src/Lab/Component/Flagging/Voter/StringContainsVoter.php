@@ -2,8 +2,8 @@
 
 namespace Lab\Component\Flagging\Voter;
 
-use Lab\Component\Flagging\Delegator\EntriesDelegatorInterface;
 use Lab\Component\Flagging\Context\Context;
+use Lab\Component\Flagging\Delegator\EntriesDelegatorInterface;
 
 /**
  * @author David Wolter <david@dampfer.net>

@@ -3,8 +3,6 @@
 namespace Lab\Component\Flagging\Context;
 
 /**
- * :TODO: refactor
- *
  * @author David Wolter <david@dampfer.net>
  */
 class Context
@@ -25,13 +23,20 @@ class Context
     protected $config;
 
     /**
-     * @param array|null  $params
-     * @param string|null $name
+     * @var ResultCache
      */
-    public function __construct(array $params = null, $name = null)
+    public $resultCache;
+
+    /**
+     * @param array|null       $params
+     * @param string|null      $name
+     * @param ResultCache|null $resultCache
+     */
+    public function __construct(array $params = null, $name = null, ResultCache $resultCache = null)
     {
         $this->params = $params;
         $this->name = $name;
+        $this->resultCache = $resultCache ? : new ResultCache();
     }
 
     /**
@@ -162,6 +167,14 @@ class Context
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return ResultCache
+     */
+    public function getResultCache()
+    {
+        return $this->resultCache;
     }
 
 }
