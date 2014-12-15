@@ -70,9 +70,9 @@ abstract class Fixtures extends \PHPUnit_Framework_TestCase
      */
     protected function getFilterVoter()
     {
-        return new FilterVoter($this->getFilters());
+        return new FilterVoter((array) $this->getFilters());
     }
-    
+
     /**
      * @return VoterInterface
      */
