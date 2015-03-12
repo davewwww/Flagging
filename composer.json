@@ -15,11 +15,20 @@
     "require": {
         "php": ">=5.3.0"
     },
-	"autoload": {
- 		"psr-0": { "Lab\\Component\\Flagging": "src/" }
-	},
     "require-dev": {
         "phpunit/phpunit": "~3.7.0",
-        "symfony/var-dumper": "2.6.*@dev"
+        "lab/tracedump": "1.0.*@dev"
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "https://git.lovoo.com/david.wolter/tracedump.git"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Lab\\Component\\Flagging": "src/" }
+    },
+    "autoload-dev": {
+        "files": [ "vendor/lab/tracedump/src/Lab/Component/TraceDump/Resources/functions/functions.php" ]
     }
 }
