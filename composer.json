@@ -22,7 +22,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url":  "https://git.lovoo.com/david.wolter/tracedump.git"
+            "url":  "git@github.com:Lovoo/Tracedump.git"
         }
     ],
     "autoload": {
