@@ -28,7 +28,7 @@ class FeatureDecider implements FeatureDeciderInterface
      * @param FeatureManagerInterface $featureManager
      * @param VoterInterface          $filterCollectionVoter
      */
-    function __construct(FeatureManagerInterface $featureManager, VoterInterface $filterCollectionVoter)
+    public function __construct(FeatureManagerInterface $featureManager, VoterInterface $filterCollectionVoter)
     {
         $this->featureManager = $featureManager;
         $this->filterCollectionVoter = $filterCollectionVoter;
@@ -45,6 +45,12 @@ class FeatureDecider implements FeatureDeciderInterface
 
         $context->setName($feature->getName());
         $this->checkParameter($context, $feature->getRequiredParameters());
+
+        if ((null !== $breaker = $feature->getBreaker()) && !empty($breaker)) {
+            if ($this->voteFilters($breaker, $context)) {
+                return false;
+            }
+        }
 
         return $this->voteFilters($feature->getFilters(), $context);
     }

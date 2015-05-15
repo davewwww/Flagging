@@ -28,9 +28,6 @@
     "autoload": {
         "psr-0": { "Lab\\Component\\Flagging": "src/" }
     },
-    "autoload-dev": {
-        "files": [ "vendor/lab/tracedump/src/Lab/Component/TraceDump/Resources/functions/functions.php" ]
-    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0.x-dev"

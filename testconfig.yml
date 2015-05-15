@@ -46,6 +46,18 @@ lab_flagging:
         -
           value: 5
 
+    test_feature_breaker:
+      breaker:
+        - emails: ["user@domain.com"]
+      filters:
+        -
+          country: ["DE"]
+        -
+          country: ["US"]
+        -
+          country: ["AT"]
+
+
 Filters
   filterCollection[]
 

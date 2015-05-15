@@ -5,7 +5,7 @@ namespace Lab\Component\Flagging\Model;
 /**
  * @author David Wolter <david@dampfer.net>
  */
-interface FeatureInterface extends FiltersTraitInterface
+interface FeatureInterface extends FiltersTraitInterface, BreakerTraitInterface
 {
     /**
      * @return string

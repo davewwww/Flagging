@@ -9,7 +9,6 @@ use Lab\Component\Flagging\Model\FilterCollection;
 
 class FeatureDeciderTest extends Fixtures
 {
-
     public function testFeatureDeciderOneFilter()
     {
         $featureDecider = $this->getFeatureDecider();
@@ -17,6 +16,17 @@ class FeatureDeciderTest extends Fixtures
 
         $feature = new Feature("feature", array(new FilterCollection(array(new Filter("substr", "foo")))));
         $this->assertTrue($featureDecider->decideFeature($feature, $context));
+    }
+
+    public function testFeatureDeciderOneFilterWithBreaker()
+    {
+        $featureDecider = $this->getFeatureDecider();
+        $context = new Context();
+
+        $feature = new Feature('feature', array(new FilterCollection(array(new Filter("substr", "foo")))));
+        $feature->setBreaker(array(new FilterCollection(array(new Filter("substr", "foo")))));
+
+        $this->assertFalse($featureDecider->decideFeature($feature, $context));
     }
 
     public function testFeatureDeciderTwoFilter()

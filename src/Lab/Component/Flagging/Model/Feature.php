@@ -7,7 +7,7 @@ namespace Lab\Component\Flagging\Model;
  */
 class Feature implements FeatureInterface
 {
-    use FiltersTrait;
+    use FiltersTrait, BreakerTrait;
 
     /**
      * @var string
