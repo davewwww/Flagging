@@ -29,14 +29,6 @@ class FilterBag implements FilterBagInterface
     }
 
     /**
-     * @param FilterGroupInterface $filterGroup
-     */
-    public function addFilterGroup(FilterGroupInterface $filterGroup)
-    {
-        $this->filterGroups[] = $filterGroup;
-    }
-
-    /**
      * @return bool
      */
     public function hasFilter()

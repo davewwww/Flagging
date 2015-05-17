@@ -33,14 +33,6 @@ class Filter implements FilterInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function setParameter($parameter)
-    {
-        $this->parameter = $parameter;
-    }
-
-    /**
      * @return string
      */
     public function __toString()

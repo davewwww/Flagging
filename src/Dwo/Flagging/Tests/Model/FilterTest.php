@@ -25,7 +25,8 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     public function testToString()
     {
         $filter = new Filter('foo', array('bar'));
+        $filter->setName('foobar');
 
-        self::assertEquals('foo_["bar"]', (string) $filter);
+        self::assertEquals('foobar_["bar"]', (string) $filter);
     }
 }

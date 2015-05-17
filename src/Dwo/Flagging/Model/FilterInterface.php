@@ -11,9 +11,4 @@ interface FilterInterface extends NameInterface
      * @return mixed
      */
     public function getParameter();
-
-    /**
-     * @param mixed $parameters
-     */
-    public function setParameter($parameters);
 }

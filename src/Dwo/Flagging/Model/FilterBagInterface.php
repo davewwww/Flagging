@@ -13,11 +13,6 @@ interface FilterBagInterface
     public function getFilterGroups();
 
     /**
-     * @param FilterGroupInterface $filterGroup
-     */
-    public function addFilterGroup(FilterGroupInterface $filterGroup);
-
-    /**
      * @return bool
      */
     public function hasFilter();

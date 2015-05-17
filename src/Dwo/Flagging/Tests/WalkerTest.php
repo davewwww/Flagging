@@ -54,6 +54,7 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
     {
         $closure = function ($arg) {
             self::assertEquals('DE', $arg);
+
             return true;
         };
 
@@ -66,11 +67,34 @@ class WalkerTest extends \PHPUnit_Framework_TestCase
     {
         $closure = function ($arg) {
             self::assertEquals('DE', $arg);
+
             return true;
         };
 
         $result = Walker::delegateNegated('DE', $closure);
 
         self::assertTrue($result);
+    }
+
+    public function testWalk()
+    {
+        $closure = function ($a) {
+            return true;
+        };
+
+        self::assertTrue(Walker::walk(array('foo', 'bar'), $closure, Walker::WALK_AND));
+        self::assertTrue(Walker::walk(array('foo', 'bar'), $closure, Walker::WALK_OR));
+    }
+
+    /**
+     * @expectedException \Dwo\Flagging\Exception\FlaggingException
+     */
+    public function testWalkUnknown()
+    {
+        $closure = function ($a) {
+            return true;
+        };
+
+        Walker::walk(array('foo', 'bar'), $closure, 'foo');
     }
 }
