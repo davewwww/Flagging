@@ -5,31 +5,39 @@ namespace Dwo\Flagging;
 use Dwo\Flagging\Context\Context;
 use Dwo\Flagging\Model\Feature;
 use Dwo\Flagging\Model\FeatureManagerInterface;
-use Dwo\Flagging\Voter\FeatureVoter;
-use Dwo\Flagging\Voter\FilterBagVoter;
+use Dwo\Flagging\Voter\FilterGroupsVoter;
 
 /**
  * @author David Wolter <david@lovoo.com>
  */
-class ValueDecider extends FeatureDecider implements FeatureDeciderInterface
+class ValueDecider implements FeatureDeciderInterface
 {
     /**
-     * @var FilterBagVoter
+     * @var FeatureManagerInterface
      */
-    protected $filterBagVoter;
+    protected $featureManager;
+    /**
+     * @var FeatureDecider
+     */
+    protected $featureDecider;
+    /**
+     * @var FilterGroupsVoter
+     */
+    protected $voter;
 
     /**
      * @param FeatureManagerInterface $featureManager
-     * @param FeatureVoter            $voter
-     * @param FilterBagVoter          $filterBagVoter
+     * @param FeatureDecider          $featureDecider
+     * @param FilterGroupsVoter       $voter
      */
     public function __construct(
         FeatureManagerInterface $featureManager,
-        FeatureVoter $voter,
-        FilterBagVoter $filterBagVoter
+        FeatureDecider $featureDecider,
+        FilterGroupsVoter $voter
     ) {
-        parent::__construct($featureManager, $voter);
-        $this->filterBagVoter = $filterBagVoter;
+        $this->featureManager = $featureManager;
+        $this->featureDecider = $featureDecider;
+        $this->voter = $voter;
     }
 
     /**
@@ -37,7 +45,8 @@ class ValueDecider extends FeatureDecider implements FeatureDeciderInterface
      */
     public function decideFeature(Feature $feature, Context $context, $default = null)
     {
-        if (parent::decideFeature($feature, $context, $default)) {
+        if ($this->featureDecider->decideFeature($feature, $context, $default)) {
+
             foreach ($feature->getValue()->getValues() as $key => $value) {
 
                 /**
@@ -45,10 +54,23 @@ class ValueDecider extends FeatureDecider implements FeatureDeciderInterface
                  */
                 $context->setName($feature->getName().'_'.$key);
 
-                if ($this->filterBagVoter->vote($value->getFilter(), $context)) {
+                $filter = $value->getFilter();
+                if ($filter->hasFilter() ? $this->voter->vote($filter->getFilterGroups(), $context) : true) {
                     return $value->getValue();
                 }
             }
+        }
+
+        return $default;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function decide($name, Context $context, $default = null)
+    {
+        if (null !== $feature = $this->featureManager->findFeatureByName($name)) {
+            return $this->decideFeature($feature, $context, $default);
         }
 
         return $default;

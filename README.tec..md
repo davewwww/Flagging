@@ -26,10 +26,9 @@ Vote procedure
 
 - FeatureDecider::decide( name/Feature )
     - FeatureVoter::vote( Feature )
-        - FilterBagVoter::vote( FilterBag )
-            - FeatureGroupsVoter::vote( FilterGroups[] )
-                - EntriesAndVoter::vote( Filters[] )
-                    - FilterVoter::vote( Filter )
-                        - VoterManager::getVoter( name )
-                        - ***Voter::vote( config )
+        - FeatureGroupsVoter::vote( FilterGroups[] )
+            - EntriesAndVoter::vote( Filters[] )
+                - FilterVoter::vote( Filter )
+                    - VoterManager::getVoter( name )
+                    - ***Voter::vote( config )
 

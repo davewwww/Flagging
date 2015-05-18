@@ -41,6 +41,7 @@ class FeatureDecider implements FeatureDeciderInterface
             return $this->decideFeature($feature, $context, $default);
         }
 
+
         return $default;
     }
 

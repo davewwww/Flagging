@@ -3,91 +3,127 @@
 namespace Dwo\Flagging\Tests;
 
 use Dwo\Flagging\Context\Context;
+use Dwo\Flagging\FeatureDecider;
 use Dwo\Flagging\Model\Feature;
 use Dwo\Flagging\Model\FeatureManagerInterface;
+use Dwo\Flagging\Model\FilterBag;
 use Dwo\Flagging\Model\Value;
 use Dwo\Flagging\Model\ValueBag;
 use Dwo\Flagging\ValueDecider;
-use Dwo\Flagging\Voter\FeatureVoter;
+use Dwo\Flagging\Voter\FilterGroupsVoter;
 
 class ValueDeciderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testDecideValueOk()
+    public function testDecideFeatureValueOk()
     {
         $manager = $this->mockManager();
-        $featureVoter = $this->mockFeatureVoter();
-        $filterBagVoter = $this->mockFilterBagVoter();
+        $featureDecider = $this->mockFeatureDecider();
+        $voter = $this->mockFilterGroupsVoter();
 
         $context = new Context();
 
-        $feature = new Feature('feature', null, null, new ValueBag(array(new Value('foo'))));
+        $value = new ValueBag(array(new Value('foo', new FilterBag(array('bar')))));
+        $feature = new Feature('feature', null, null, $value);
 
-        $featureVoter->expects(self::once())
-            ->method('vote')
+        $featureDecider->expects(self::once())
+            ->method('decideFeature')
             ->with($feature, $context)
             ->willReturn(true);
 
-        $filterBagVoter->expects(self::once())
+        $voter->expects(self::once())
             ->method('vote')
-            ->with(self::isInstanceOf('Dwo\Flagging\Model\FilterBagInterface'), $context)
+            ->with(self::isType('array'), $context)
             ->willReturn(true);
 
-        $decider = new ValueDecider($manager, $featureVoter, $filterBagVoter);
+        $decider = new ValueDecider($manager, $featureDecider, $voter);
         $result = $decider->decideFeature($feature, $context);
 
         self::assertEquals('foo', $result);
     }
 
-    public function testDecideValueFalse()
+    public function testDecideFeatureValueFalse()
     {
         $manager = $this->mockManager();
-        $featureVoter = $this->mockFeatureVoter();
-        $filterBagVoter = $this->mockFilterBagVoter();
+        $featureDecider = $this->mockFeatureDecider();
+        $voter = $this->mockFilterGroupsVoter();
 
         $context = new Context();
 
-        $feature = new Feature('feature', null, null, new ValueBag(array(new Value('foo'))));
+        $value = new ValueBag(array(new Value('foo', new FilterBag(array('bar')))));
+        $feature = new Feature('feature', null, null, $value);
 
-        $featureVoter->expects(self::once())
-            ->method('vote')
+        $featureDecider->expects(self::once())
+            ->method('decideFeature')
             ->with($feature, $context)
             ->willReturn(true);
 
-        $filterBagVoter->expects(self::once())
+        $voter->expects(self::once())
             ->method('vote')
-            ->with(self::isInstanceOf('Dwo\Flagging\Model\FilterBagInterface'), $context)
+            ->with(self::isType('array'), $context)
             ->willReturn(false);
 
-        $decider = new ValueDecider($manager, $featureVoter, $filterBagVoter);
+        $decider = new ValueDecider($manager, $featureDecider, $voter);
         $result = $decider->decideFeature($feature, $context);
 
         self::assertEquals(null, $result);
     }
 
-    public function testDecideValueFalseWithDefault()
+    public function testDecideFeatureValueFalseWithDefault()
     {
         $manager = $this->mockManager();
-        $featureVoter = $this->mockFeatureVoter();
-        $filterBagVoter = $this->mockFilterBagVoter();
+        $featureDecider = $this->mockFeatureDecider();
+        $voter = $this->mockFilterGroupsVoter();
 
         $context = new Context();
 
-        $feature = new Feature('feature', null, null, new ValueBag(array(new Value('foo'))));
+        $value = new ValueBag(array(new Value('foo', new FilterBag(array('bar')))));
+        $feature = new Feature('feature', new FilterBag(array()), null, $value);
 
-        $featureVoter->expects(self::once())
-            ->method('vote')
+        $featureDecider->expects(self::once())
+            ->method('decideFeature')
             ->with($feature, $context)
             ->willReturn(true);
 
-        $filterBagVoter->expects(self::once())
+        $voter->expects(self::once())
             ->method('vote')
-            ->with(self::isInstanceOf('Dwo\Flagging\Model\FilterBagInterface'), $context)
+            ->with(self::isType('array'), $context)
             ->willReturn(false);
 
-        $decider = new ValueDecider($manager, $featureVoter, $filterBagVoter);
+        $decider = new ValueDecider($manager, $featureDecider, $voter);
         $result = $decider->decideFeature($feature, $context, 'bar');
 
         self::assertEquals('bar', $result);
+    }
+
+    public function testDecideValueOk()
+    {
+        $manager = $this->mockManager();
+        $featureDecider = $this->mockFeatureDecider();
+        $voter = $this->mockFilterGroupsVoter();
+
+        $context = new Context();
+        $value = new ValueBag(array(new Value('foo', new FilterBag(array('bar')))));
+        $feature = new Feature('feature', new FilterBag(array()), null, $value);
+
+        $manager->expects(self::once())
+            ->method('findFeatureByName')
+            ->with('feature')
+            ->willReturn($feature);
+
+        $featureDecider->expects(self::once())
+            ->method('decideFeature')
+            ->with($feature, $context)
+            ->willReturn(true);
+
+        $voter->expects(self::once())
+            ->method('vote')
+            ->with(self::isType('array'), $context)
+            ->willReturn(true);
+
+        $decider = new ValueDecider($manager, $featureDecider, $voter);
+        $result = $decider->decide('feature', $context);
+
+        self::assertEquals('foo', $result);
     }
 
     /**
@@ -101,21 +137,21 @@ class ValueDeciderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|FeatureVoter
+     * @return \PHPUnit_Framework_MockObject_MockObject|FeatureDecider
      */
-    protected function mockFeatureVoter()
+    protected function mockFeatureDecider()
     {
-        return $this->getMockBuilder('Dwo\Flagging\Voter\FeatureVoter')
+        return $this->getMockBuilder('Dwo\Flagging\FeatureDecider')
             ->disableOriginalConstructor()
             ->getMock();
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|FilterBagVoter
+     * @return \PHPUnit_Framework_MockObject_MockObject|FilterGroupsVoter
      */
-    protected function mockFilterBagVoter()
+    protected function mockFilterGroupsVoter()
     {
-        return $this->getMockBuilder('Dwo\Flagging\Voter\FilterBagVoter')
+        return $this->getMockBuilder('Dwo\Flagging\Voter\FilterGroupsVoter')
             ->disableOriginalConstructor()
             ->getMock();
     }

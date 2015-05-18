@@ -4,12 +4,8 @@ namespace Dwo\Flagging\Tests\Voter;
 
 use Dwo\Flagging\Context\Context;
 use Dwo\Flagging\Model\Filter;
-use Dwo\Flagging\Model\FilterGroup;
 use Dwo\Flagging\Voter\CachedFilterVoter;
-use Dwo\Flagging\Voter\EntriesAndVoter;
-use Dwo\Flagging\Voter\FilterGroupsVoter;
 use Dwo\Flagging\Voter\FilterVoter;
-use Dwo\Flagging\Voter\VoterInterface;
 
 class CachedFilterVoterTest extends \PHPUnit_Framework_TestCase
 {
@@ -78,6 +74,19 @@ class CachedFilterVoterTest extends \PHPUnit_Framework_TestCase
         $cache = $context->getResultCache();
         self::assertTrue($cache->getResult('foo_null'));
         self::assertTrue($cache->getResult('foobar_null'));
+    }
+
+    /**
+     * @expectedException \Dwo\Flagging\Exception\FlaggingException
+     */
+    public function testInvalidArgument()
+    {
+        $voter = $this->mockVoter();
+        $voter->expects(self::never())
+            ->method('vote');
+
+        $feature = new CachedFilterVoter($voter);
+        $feature->vote('foo', new Context());
     }
 
     /**
