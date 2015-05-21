@@ -3,7 +3,6 @@
 namespace Dwo\Flagging\Factory;
 
 use Dwo\Flagging\Model\Feature;
-use Dwo\Flagging\Model\FeatureInterface;
 use Dwo\Flagging\Model\Filter;
 use Dwo\Flagging\Model\FilterBag;
 use Dwo\Flagging\Model\FilterGroup;
@@ -39,7 +38,6 @@ class FeatureFactory
             $value = new ValueBag($values);
         }
 
-
         $filter = null;
         if (isset($data['filters']) && !empty($data['filters'])) {
             $filter = self::buildFilterBag($data['filters']);
@@ -56,7 +54,7 @@ class FeatureFactory
     /**
      * @param array $data
      *
-     * @return FilterGroup[]
+     * @return FilterBag
      */
     public static function buildFilterBag(array $data)
     {
