@@ -12,6 +12,7 @@ class FeatureFactoryTest extends \PHPUnit_Framework_TestCase
     public function testEmptyFeature()
     {
         $feature = FeatureFactory::buildFeature('foo');
+        self::assertTrue($feature->isEnabled());
 
         self::assertInstanceOf('Dwo\Flagging\Model\FeatureInterface', $feature);
         self::assertEquals('foo', $feature->getName());
@@ -91,5 +92,23 @@ class FeatureFactoryTest extends \PHPUnit_Framework_TestCase
         $filter = current($filterGroups)->getFilters()[0];
         self::assertEquals('foo', $filter->getName());
         self::assertEquals('bar', $filter->getParameter());
+    }
+
+    public function testEnabledTrue()
+    {
+        $data = array(
+            'enabled' => true
+        );
+        $feature = FeatureFactory::buildFeature('foo', $data);
+        self::assertTrue($feature->isEnabled());
+    }
+
+    public function testEnabledFalse()
+    {
+        $data = array(
+            'enabled' => false
+        );
+        $feature = FeatureFactory::buildFeature('foo', $data);
+        self::assertFalse($feature->isEnabled());
     }
 }

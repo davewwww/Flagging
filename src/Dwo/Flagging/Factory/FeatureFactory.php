@@ -48,7 +48,13 @@ class FeatureFactory
             $breaker = self::buildFilterBag($data['breaker']);
         }
 
-        return new Feature($name, $filter, $breaker, $value);
+        $feature = new Feature($name, $filter, $breaker, $value);
+
+        if (isset($data['enabled']) && !$data['enabled']) {
+            $feature->setEnabled(false);
+        }
+
+        return $feature;
     }
 
     /**
