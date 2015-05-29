@@ -10,7 +10,7 @@ use Dwo\Flagging\Model\Value;
 use Dwo\Flagging\Model\ValueBag;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class FeatureFactory
 {

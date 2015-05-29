@@ -5,7 +5,7 @@ namespace Dwo\Flagging\Voter;
 use Dwo\Flagging\Context\Context;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 interface VoterInterface
 {

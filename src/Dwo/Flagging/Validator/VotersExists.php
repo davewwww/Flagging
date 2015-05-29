@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 /**
  * Class VotersExists
  *
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class VotersExists extends Constraint
 {

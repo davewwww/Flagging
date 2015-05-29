@@ -3,7 +3,7 @@
 namespace Dwo\Flagging\Context;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class ResultCache
 {

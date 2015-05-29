@@ -7,7 +7,7 @@ use Dwo\Flagging\Model\Feature;
 use Dwo\Flagging\Model\FeatureInterface;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class FeatureVoter
 {

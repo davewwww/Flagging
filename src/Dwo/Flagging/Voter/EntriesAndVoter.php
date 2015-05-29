@@ -6,7 +6,7 @@ use Dwo\Flagging\Context\Context;
 use Dwo\Flagging\Walker;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class EntriesAndVoter implements VoterInterface
 {

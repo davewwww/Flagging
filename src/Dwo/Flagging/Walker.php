@@ -5,7 +5,7 @@ namespace Dwo\Flagging;
 use Dwo\Flagging\Exception\FlaggingException;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class Walker
 {

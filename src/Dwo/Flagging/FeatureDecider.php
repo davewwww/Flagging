@@ -8,7 +8,7 @@ use Dwo\Flagging\Model\FeatureManagerInterface;
 use Dwo\Flagging\Voter\FeatureVoter;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class FeatureDecider implements FeatureDeciderInterface
 {

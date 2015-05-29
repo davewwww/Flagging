@@ -5,7 +5,7 @@ namespace Dwo\Flagging\Context;
 /**
  * :TODO: remove deprecated
  *
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class Context
 {

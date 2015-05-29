@@ -7,7 +7,7 @@ use Dwo\Flagging\Model\FilterGroupInterface;
 use Dwo\Flagging\Walker;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class FilterGroupsVoter
 {

@@ -3,7 +3,7 @@
 namespace Dwo\Flagging\Exception;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class FlaggingException extends \Exception
 {

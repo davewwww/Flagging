@@ -7,7 +7,7 @@ use Dwo\Flagging\Exception\FlaggingException;
 use Dwo\Flagging\Model\FilterInterface;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class CachedFilterVoter implements VoterInterface
 {

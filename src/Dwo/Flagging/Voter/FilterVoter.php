@@ -8,7 +8,7 @@ use Dwo\Flagging\Model\FilterInterface;
 use Dwo\Flagging\Model\VoterManagerInterface;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class FilterVoter implements VoterInterface
 {

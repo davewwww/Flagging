@@ -9,7 +9,7 @@ use Symfony\Component\Validator\ConstraintValidator;
 /**
  * Class VotersExistsValidator
  *
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class VotersExistsValidator extends ConstraintValidator
 {

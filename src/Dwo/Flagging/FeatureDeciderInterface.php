@@ -6,7 +6,7 @@ use Dwo\Flagging\Context\Context;
 use Dwo\Flagging\Model\Feature;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 interface FeatureDeciderInterface
 {

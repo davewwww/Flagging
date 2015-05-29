@@ -7,7 +7,7 @@ use Dwo\Flagging\Model\FilterGroupInterface;
 use Dwo\Flagging\Model\ValueBagInterface;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class FeatureSerializer
 {

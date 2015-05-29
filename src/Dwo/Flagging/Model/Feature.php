@@ -3,7 +3,7 @@
 namespace Dwo\Flagging\Model;
 
 /**
- * @author David Wolter <david@lovoo.com>
+ * @author Dave Www <davewwwo@gmail.com>
  */
 class Feature implements FeatureInterface
 {
