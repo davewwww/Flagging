@@ -22,11 +22,7 @@ class VoterManager implements VoterManagerInterface
     }
 
     /**
-     * @param string $name
-     *
-     * @throws FlaggingException
-     *
-     * @return VoterInterface
+     * {@inheritdoc}
      */
     public function getVoter($name)
     {
@@ -35,5 +31,13 @@ class VoterManager implements VoterManagerInterface
         }
 
         return $this->voter[$name];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAllVoters()
+    {
+        return $this->voter;
     }
 }

@@ -18,4 +18,9 @@ interface VoterManagerInterface
      * @return VoterInterface
      */
     public function getVoter($name);
+
+    /**
+     * @return VoterInterface[]
+     */
+    public function getAllVoters();
 }
