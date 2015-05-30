@@ -41,7 +41,9 @@ class VoterExtractor
         $extractVoters = function (array $filters) {
             $voters = [];
             foreach ($filters as $filter) {
-                $voters = array_merge($voters, array_keys($filter));
+                if (is_array($filter)) {
+                    $voters = array_merge($voters, array_keys($filter));
+                }
             }
 
             return array_unique($voters);
