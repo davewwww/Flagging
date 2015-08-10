@@ -30,7 +30,8 @@ class FeatureSerializerTest extends \PHPUnit_Framework_TestCase
                     )
                 ),
                 array(
-                    'value' => ['foobar'],
+                    'value'      => ['foobar'],
+                    'is_feature' => true,
                 )
             ),
             'enabled' => true,

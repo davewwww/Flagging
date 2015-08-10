@@ -2,10 +2,8 @@
 
 namespace Dwo\Flagging\Tests\Model;
 
-use Dwo\Flagging\Model\Feature;
 use Dwo\Flagging\Model\FilterBag;
 use Dwo\Flagging\Model\Value;
-use Dwo\Flagging\Model\ValueBag;
 
 class ValueTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,14 +13,16 @@ class ValueTest extends \PHPUnit_Framework_TestCase
 
         self::assertEquals('foo', $value->getValue());
         self::assertInstanceOf('Dwo\Flagging\Model\FilterBagInterface', $value->getFilter());
+        self::assertFalse($value->isFeature());
     }
 
     public function testConstruct()
     {
         $filter = new FilterBag(array('foo'));
 
-        $value = new Value('foo', $filter);
+        $value = new Value('foo', $filter, true);
 
         self::assertEquals($filter, $value->getFilter());
+        self::assertTrue($value->isFeature());
     }
 }

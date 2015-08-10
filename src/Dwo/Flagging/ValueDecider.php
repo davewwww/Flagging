@@ -56,6 +56,10 @@ class ValueDecider implements FeatureDeciderInterface
 
                 $filter = $value->getFilter();
                 if ($filter->hasFilter() ? $this->voter->vote($filter->getFilterGroups(), $context) : true) {
+                    if ($value->isFeature()) {
+                        return $this->decide($value->getValue(), $context, $default);
+                    }
+
                     return $value->getValue();
                 }
             }

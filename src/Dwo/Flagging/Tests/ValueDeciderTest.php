@@ -126,6 +126,35 @@ class ValueDeciderTest extends \PHPUnit_Framework_TestCase
         self::assertEquals('foo', $result);
     }
 
+    public function testDecideValueIsFeature()
+    {
+        $manager = $this->mockManager();
+        $featureDecider = $this->mockFeatureDecider();
+        $voter = $this->mockFilterGroupsVoter();
+
+        $context = new Context();
+        $value = new ValueBag(array(new Value('feature2', null, true)));
+        $feature = new Feature('feature', new FilterBag(array()), null, $value);
+
+        $value2 = new ValueBag(array(new Value('lorem')));
+        $feature2 = new Feature('feature2', new FilterBag(array()), null, $value2);
+
+        $manager->expects(self::exactly(2))
+            ->method('findFeatureByName')
+            ->withConsecutive(array('feature'), array('feature2'))
+            ->willReturnOnConsecutiveCalls($feature, $feature2);
+
+        $featureDecider->expects(self::exactly(2))
+            ->method('decideFeature')
+            ->withConsecutive(array($feature, $context),array($feature2, $context))
+            ->willReturnOnConsecutiveCalls(true, true);
+
+        $decider = new ValueDecider($manager, $featureDecider, $voter);
+        $result = $decider->decide('feature', $context);
+
+        self::assertEquals('lorem', $result);
+    }
+
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject|FeatureManagerInterface
      */

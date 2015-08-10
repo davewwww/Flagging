@@ -16,4 +16,9 @@ interface ValueInterface
      * @return FilterBagInterface
      */
     public function getFilter();
+
+    /**
+     * @return bool
+     */
+    public function isFeature();
 }

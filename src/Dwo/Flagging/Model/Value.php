@@ -18,13 +18,20 @@ class Value implements ValueInterface
     protected $value;
 
     /**
+     * @var bool
+     */
+    protected $isFeature;
+
+    /**
      * @param mixed                   $value
      * @param FilterBagInterface|null $filter
+     * @param bool                    $isFeature
      */
-    public function __construct($value, FilterBagInterface $filter = null)
+    public function __construct($value, FilterBagInterface $filter = null, $isFeature = false)
     {
         $this->value = $value;
         $this->filter = $filter ?: new FilterBag();
+        $this->isFeature = (bool) $isFeature;
     }
 
     /**
@@ -41,5 +48,13 @@ class Value implements ValueInterface
     public function getFilter()
     {
         return $this->filter;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isFeature()
+    {
+        return $this->isFeature;
     }
 }

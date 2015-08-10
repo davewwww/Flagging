@@ -28,12 +28,15 @@ class FeatureFactory
         if (isset($data['values'])) {
             foreach ($data['values'] as $value) {
 
-                $filter = null;
+                $filter = $isFeature = null;
                 if (isset($value['filters']) && !empty($value['filters'])) {
                     $filter = self::buildFilterBag($value['filters']);
                 }
+                if (isset($value['is_feature'])) {
+                    $isFeature = (bool) $value['is_feature'];
+                }
 
-                $values[] = new Value($value['value'], $filter);
+                $values[] = new Value($value['value'], $filter, $isFeature);
             }
             $value = new ValueBag($values);
         }

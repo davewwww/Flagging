@@ -65,6 +65,7 @@ class FeatureFactoryTest extends \PHPUnit_Framework_TestCase
         /** @var ValueInterface $value */
         $value = current($values);
         self::assertEquals('foo', $value->getValue());
+        self::assertFalse($value->isFeature());
     }
 
     public function testValueWithFilter()
@@ -92,6 +93,24 @@ class FeatureFactoryTest extends \PHPUnit_Framework_TestCase
         $filter = current($filterGroups)->getFilters()[0];
         self::assertEquals('foo', $filter->getName());
         self::assertEquals('bar', $filter->getParameter());
+    }
+
+    public function testValueIsFeature()
+    {
+        $data = array(
+            'values' => array(
+                array(
+                    'value'      => 'foo',
+                    'is_feature' => true
+                )
+            )
+        );
+        $feature = FeatureFactory::buildFeature('foo', $data);;
+        self::assertCount(1, $values = $feature->getValue()->getValues());
+
+        /** @var Value $value */
+        $value = current($values);
+        self::assertTrue($value->isFeature());
     }
 
     public function testEnabledTrue()

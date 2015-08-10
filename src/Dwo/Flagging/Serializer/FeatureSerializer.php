@@ -74,6 +74,10 @@ class FeatureSerializer
                 $serialized['filters'] = $filters;
             }
 
+            if($value->isFeature()) {
+                $serialized['is_feature'] = true;
+            }
+
             $return[] =  $serialized;
         }
 
